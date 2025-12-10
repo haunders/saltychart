@@ -1,0 +1,89 @@
+<%- include('partials/header', {title: "Importing Data" }); %>
+
+    <body>
+        <%- include('partials/header-menu'); %>
+        <div class="chart-box">
+            <div class="chart-header">
+                <h1 class="page-title">Importing Data</h1>
+                <input class="date-box-input" type="date" id="date" name="date" value=<%=date %>
+                min=<%= date %>
+                    onkeydown="return false"
+                    onclick="this.showPicker()"/>
+                    <%if (post> 0) {%>
+                        <button style="border: 1px #000 solid;" onclick="baby();">Import</button>
+                        <%}%>
+            </div>
+            <div class="msg-box hidden-box">
+                Data insert failed
+            </div>
+            <% values.forEach((item)=> { %>
+                <div class="chart-content">
+                    <ul class="chart-entry">
+                        <li class="chart-entry-pos">
+                            <span class="chart-entry-pos-text">
+                                <%= item[0] %>
+                            </span>
+                        </li>
+                        <li class="chart-entry-rest">
+                            <ul class="chart-entry-info">
+                                <li class="chart-entry-song-info">
+                                    <h3 class="chart-entry-title truncate-text">
+                                        <%- item[1] %>
+                                    </h3>
+                                    <span class="chart-entry-artist truncate-text">
+                                        <%- item[2] %>
+                                    </span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <% }); %>
+        </div>
+        <nav aria-label="pagination" class="pagination-box noselect">
+            <ul class="pagination">
+                <% let isThreeDots=false; %>
+                    <% for (let i=1; i <=20; i++) { %>
+                        <li>
+                            <a href=<%="?post=" +i %>
+                                <% if (post==i) { %>aria-current="page"<% } %>>
+                                        <span class="visuallyhidden">page </span><%- i %>
+                            </a>
+                        </li>
+                        <% } %>
+            </ul>
+        </nav>
+        </div>
+        </div>
+    </body>
+    <script>
+        async function baby() {
+            let values = []
+            let el = document.getElementById("date");
+        <% values.forEach((item) => { %>
+                values.push([<%- item[0] %>, "<%- item[1] %>", "<%- item[2] %>"]);
+        <% }); %>
+
+        const request = new Request("/api/parse", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        data: values,
+                        date: el.value
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                });
+            const response1 = await fetch(request);
+            if (response1.status == 200) {
+                $( ".msg-box" ).toggleClass('hidden-box shown-box success-box');
+                $( ".msg-box" ).text("Data insert succeeded");
+                const response2 = await fetch("/api/update/"+el.value.slice(0, 4));
+                const response3 = await fetch("/api/update");
+            } else {
+                $( ".msg-box" ).toggleClass('hidden-box shown-box fail-box');
+            };
+        }
+    </script>
+
+    </html>

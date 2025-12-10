@@ -1,0 +1,37 @@
+<div class="artist-track">
+    <div class="artist-track-data">
+        <h3 class="artist-track-title truncate-text-one-line">
+            <% if (track.display_title == null || track.display_title == "") {%>
+                <%- track.title %>
+            <%} else {%>
+                <%- track.display_title %>
+            <%}%>
+        </h3>
+        <span class="artist-track-performer truncate-text-one-line">
+            <% if (track.display_performer == null || track.display_performer == "") {%>
+                <%- track.performer %>
+            <%} else {%>
+                <%- track.display_performer.replaceAll("[", "<a  aria-current='disabled' href='/artists/").replaceAll("|", "'>").replaceAll("]", "</a>") %>
+            <%}%>
+        </span>
+    </div>
+    <div class="artist-track-stats">
+        <div class="artist-track-stats-debut">
+            <span class="artist-track-stats-debut-date">
+                <a href=<%= "/chart/"+track.debut %>><%= track.debut %></a>
+            </span>
+        </div>
+        <div class="artist-track-stats-peak">
+            <span class="artist-track-stats-peak-num"><%= track.days %></span>
+        </div>
+        <div class="artist-track-stats-peak">
+            <span class="artist-track-stats-peak-num"><%= track.peak %></span>
+            <% if (track.days_at_1 != null) { %>
+                <span class="artist-track-stats-peak-amount">x<%= track.days_at_1 %></span>
+            <% } %>
+        </div>
+        <div class="artist-track-stats-peak">
+            <span class="artist-track-stats-peak-num"><%= track.points %></span>
+        </div>
+    </div>
+</div>

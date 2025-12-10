@@ -1,0 +1,83 @@
+<%- include('partials/header', {title: "Salty Chart Worldwide: " +artist.title}); %>
+
+    <body>
+        <%- include('partials/header-menu'); %>
+            <div class="artist-page-top">
+                <div class="artist-header">
+                    <img class="artist-img" src=<%="/img/artists/" + artist.techName + ".jpg" %>
+                    onerror="this.onerror=null; this.src='/img/artists/placeholder.jpg';"/>
+                    <div class="artist-info">
+                        <% if (!artist.is_band) {%>
+                            <h3 class="artist-type">Artist</h3>
+                            <% } else {%>
+                                <h3 class="artist-type">Band</h3>
+                                <% } %>
+                                    <h1 class="artist-title">
+                                        <%= artist.title %>
+                                    </h1>
+                                    <% if (aka_raw.length> 0) {%>
+                                        <h3 class="artist-type members-title">a.k.a.:</h3>
+                                        <% aka_raw.forEach((aka)=> { %>
+                                            <span class="band-block"><%- aka.title %></span>
+                                            <% }); %>
+                                                <% } %>
+                                                    <% if (band_link.length> 0) {%>
+                                                        <% if (!artist.is_band) {%>
+                                                            <h3 class="artist-type members-title">Member of:</h3>
+                                                            <% band_link.forEach((band)=> { %>
+                                                                <span class="band-block"><a href=<%- band.band_tech
+                                                                        %>><%- band.band_title %></a></span>
+                                                                <% }); %>
+                                                                    <% } else {%>
+                                                                        <h3 class="artist-type members-title">Members:
+                                                                        </h3>
+                                                                        <% band_link.forEach((band)=> { %>
+                                                                            <span class="band-block"><a href=<%-
+                                                                                    band.band_tech %>><%-
+                                                                                        band.band_title %></a></span>
+                                                                            <% }); %>
+                                                                                <% } %>
+                                                                                    <% } %>
+                    </div>
+                </div>
+                <div class="artist-stats">
+                    <div class="artist-stat-box">
+                        <span class="artist-stat-number"><%- no1_amount %></span>
+                        <span class="artist-stat-desc">#1 Hits</span>
+                    </div>
+                    <div class="artist-stat-box">
+                        <span class="artist-stat-number"><%- top3_amount %></span>
+                        <span class="artist-stat-desc">Top-3 Hits</span>
+                    </div>
+                    <div class="artist-stat-box">
+                        <span class="artist-stat-number"><%- full_len %></span>
+                        <span class="artist-stat-desc">Songs</span>
+                    </div>
+                </div>
+            </div>
+            <div class="table-header">
+                <% if (full_len> 0) { %>
+                    <div class="chart-box">
+                        <div class="table-header-texts">
+                            <div class="table-header-text-block"><span>Debut date</span></div>
+                            <div class="table-header-text-block-2"><span>Days on chart</span></div>
+                            <div class="table-header-text-block-2"><span>Peak position</span></div>
+                            <div class="table-header-text-block-2"><span>Points</span></div>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+            <div class="chart-box">
+                <div class="chart-track-box">
+                    <% tracks.forEach((track)=> { %>
+                        <% if (track.days> 0) { %>
+                            <%- include('partials/track-entry', {track: track}); %>
+                                <% } %>
+                                    <% }); %>
+                </div>
+            </div>
+    </body>
+    <script>
+    </script>
+
+    </html>

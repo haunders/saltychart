@@ -1,0 +1,47 @@
+<ul class="chart-entry">
+    <li class="chart-entry-pos"><span class="chart-entry-out-text">OUT</span></li>
+    <li class="chart-entry-img-container">
+        <div>
+            <img
+            class="chart-entry-img dropout-img"
+            src=<%= "/img/artists/" + item.tech_name + ".jpg" %>
+            onerror="this.onerror=null; this.src='/img/artists/placeholder.jpg';"
+            />
+        </div>
+    </li>
+    <li class="chart-out-pos"></li>
+    <li class="chart-entry-rest">
+        <ul class="chart-entry-info">
+            <li class="chart-entry-song-info">
+                <h3 class="chart-entry-title truncate-text">
+                    <% if (item.display_title == null || item.display_title == "") {%>
+                        <%= item.title %>
+                    <%} else {%>
+                        <%= item.display_title %>
+                    <%}%>
+                </h3>
+                <span class="chart-entry-artist truncate-text">
+                    <% if (item.display_performer == null || item.display_performer == "") {%>
+                        <%= item.performer %>
+                    <%} else {%>
+                        <%- item.display_performer.replaceAll("[", "<a href='/artists/").replaceAll("|", "'>").replaceAll("]", "</a>") %>
+                    <%}%>
+                </span>
+            </li>
+            <div class="chart-entry-stats">
+                <div class="chart-entry-stats-line">
+                    <span class="chart-entry-stats-title">PEAK</span>
+                    <li>
+                        <span class="chart-entry-stats-value"><%= item.peak %><% if (item.days_at_1 != null) {%>x<%= item.days_at_1 %><%}%></span>
+                    </li>
+                </div>
+                <div class="chart-entry-stats-line">
+                    <span class="chart-entry-stats-title">DAYS</span>
+                    <li>
+                        <span class="chart-entry-stats-value"><%= item.days %></span>
+                    </li>
+                </div>
+            </div>
+        </ul>
+    </li>
+</ul>

@@ -1,0 +1,41 @@
+{
+  "name": "express-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "blyadina4esno4naya",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "@adminjs/express": "^6.1.1",
+    "@adminjs/sql": "^2.2.6",
+    "@adminjs/upload": "^4.0.2",
+    "@sequelize/postgres": "^7.0.0-alpha.47",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "adminjs": "^7.8.17",
+    "body-parser": "^2.2.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-formidable": "^1.2.0",
+    "express-session": "^1.18.2",
+    "googleapis": "^167.0.0",
+    "knex": "^3.1.0",
+    "knex-paginate": "^3.2.0",
+    "nodemon": "^3.1.11",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "sequelize": "^6.37.7",
+    "vk-io": "^4.10.1",
+    "yarn": "^1.22.22"
+  }
+}

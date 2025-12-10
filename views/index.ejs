@@ -1,0 +1,33 @@
+<%- include('partials/header', {title: "Salty Chart Worldwide: " +date_string}); %>
+
+    <body>
+        <%- include('partials/header-menu'); %>
+            <div class="chart-box">
+                <div class="chart-header">
+                    <h1 class="page-title">Salty Chart Worldwide</h1>
+                    <input class="date-box-input" type="date" id="date" name="date" value=<%=date_string %>
+                    min="2021-01-18"
+                    max=<%= max_date %>
+                        onkeydown="return false"
+                        onclick="this.showPicker()"
+                        onchange="redirect()"/>
+                </div>
+                <% data.forEach((item)=> { %>
+                    <%- include('partials/chart-entry', {item: item}); %>
+                        <% }); %>
+                            <% if (data_out.length> 0) {%>
+                                <div class="dropout-header"><span>Dropouts</span></div>
+                                <% data_out.forEach((item)=> { %>
+                                    <%- include('partials/chart-entry-out', {item: item}); %>
+                                        <% }); %>
+                                            <% } %>
+            </div>
+    </body>
+    <script>
+        function redirect() {
+            var el = document.getElementById("date");
+            window.location.replace("/chart/" + el.value);
+        }
+    </script>
+
+    </html>

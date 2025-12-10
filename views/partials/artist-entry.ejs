@@ -1,0 +1,9 @@
+<div class="artist-hub-entry">
+    <a class="artist-image-link" href=<%= "/artists/"+artist.tech_name %>>
+        <img class="artist-img-small" src=<%= "/img/artists/" + artist.tech_name + ".jpg" %> 
+        onerror="this.onerror=null; this.src='/img/artists/placeholder.jpg';"/><br>
+    </a>
+    <a class="artist-link-hub" href=<%= "/artists/"+artist.tech_name %>>
+        <span class="artist-hub-name"><%= artist.title %></span>
+    </a>
+</div>
