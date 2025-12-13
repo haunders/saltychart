@@ -13,7 +13,7 @@ artistRouter.get("/:tech_name", async(req, res) => {
         const result = await sequelize.query(`select tr.title, tr.performer, tr.display_title, tr.display_performer,
             count(p.id) as days, min(p.track_position) as peak,
             nullif(count(p.id) filter(where p.track_position = 1), 0) as days_at_1,
-            min(p.chart_date) as debut,
+            to_char(min(p.chart_date) :: date, 'dd.mm.yyyy') as debut,
             coalesce(sum(21 - p.track_position),0) as points
             from track tr
             left join positions p on p.track_id = tr.id
