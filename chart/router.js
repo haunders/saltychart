@@ -2,7 +2,8 @@ import express from 'express';
 import { QueryTypes } from 'sequelize';
 import { sequelize } from '../database.js';
 import { vk } from '../vk-api.js';
-import { ChartMainPosition, Track } from "../chart/models.js";
+import { ChartMainPosition } from "../chart/models.js";
+import { requiresAuthentication, requiresAdmin } from "../auth/controller.js";
 
 export const chartRouter = express.Router();
 chartRouter.get("/chart/:year-:month-:day", async (req, res) => {
@@ -91,10 +92,7 @@ chartRouter.get("/chart", async (req, res) => {
     res.redirect('/chart/' + max_date[0].max);
 });
 
-chartRouter.get("/parse", async (req, res) => {
-    /*if (!req.user || req.user.id != my_own_id) {
-        return res.status(400).send("Нельзя, не трогай, запрещено");
-    }*/
+chartRouter.get("/parse", requiresAdmin, async (req, res) => {
     const post = req.query['post'];
     const max_date = await ChartMainPosition.findAll({
         attributes: [
