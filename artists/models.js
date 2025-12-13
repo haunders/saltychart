@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+import sequelizePaginate from 'sequelize-paginate';
 import { sequelize } from '../database.js';
 import { Track } from '../chart/models.js';
 
@@ -75,3 +76,5 @@ Performer.hasMany(BandMember, { as: 'band_member_band', foreignKey: 'bandId'});
 BandMember.belongsTo(Performer, { as: 'band_member_band', foreignKey: 'bandId'});
 Performer.hasMany(BandMember, { as: 'band_member', foreignKey: 'memberId'});
 BandMember.belongsTo(Performer, { as: 'performer', foreignKey: 'memberId'});
+
+sequelizePaginate.paginate(Performer)

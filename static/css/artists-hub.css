@@ -119,6 +119,7 @@ nav {
 .pagination a[aria-current="page"] {
     background-color: #501a87;
     color: white;
+    pointer-events: none;
 }
 
 .pagination-box {
