@@ -1,6 +1,6 @@
 import express from 'express';
 import { QueryTypes } from 'sequelize';
-import { knex_db, sequelize } from '../database.js';
+import { sequelize } from '../database.js';
 import { Performer } from "./models.js";
 
 export const artistRouter = express.Router();
