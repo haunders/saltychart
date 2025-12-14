@@ -1,0 +1,42 @@
+<%- include('partials/header', {title: "Changelog" }); %>
+
+<body>
+    <%- include('partials/header-menu'); %>
+        <div class="chart-box">
+            <div class="chart-header artist-hub-header">
+                <h1 class="page-title">Changelog</h1>
+            </div>
+        </div>
+        <div class="wide-box">
+            <% changelog.forEach((entry)=> { %>
+                <section class="changelog-block">
+                    <div class="changelog-date">
+                        <% const date_format = new Date(entry.releaseDate); %>
+                        <%- date_format.toLocaleString('en-US', { month: 'long' }) + ' ' + date_format.getDate() + ', ' + date_format.getFullYear() %>
+                    </div>
+                    <div class="changelog-version">
+                        <p class="changelog-version-phaze">
+                            <%- entry.phaze %>
+                        </p>
+                        <p class="changelog-version-number">
+                            <%- entry.version %>
+                        </p>
+                    </div>
+                    <div>
+                        <ul>
+                            <% const changelog_entries = entry.text.split("*") %>
+                            <% changelog_entries.forEach((text_entry)=> {  %>
+                                <li class="changelog-entry">
+                                    <%- text_entry %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                </section>
+            <% }); %>
+        </div>
+</body>
+<script>
+</script>
+
+</html>

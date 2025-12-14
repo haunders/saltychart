@@ -9,6 +9,7 @@ import { chartRouter } from './chart/router.js';
 import { artistRouter } from './artists/router.js';
 import { authRouter } from './auth/router.js';
 import { apiRouter } from './api/router.js';
+import { changelogRouter } from './changelog/router.js';
 import { admin, adminRouter } from './admin.js';
 import { User } from "./auth/models.js";
 import GoogleStrategy from 'passport-google-oauth20';
@@ -74,6 +75,7 @@ const start = async () => {
     app.use('/artists', artistRouter);
     app.use('/auth', authRouter);
     app.use('/api', apiRouter);
+    app.use('/changelog', changelogRouter);
 
     app.listen(process.env.APP_PORT, () => {
         console.log(`AdminJS started on ${process.env.APP_URL}${admin.options.rootPath}`);

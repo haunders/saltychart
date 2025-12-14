@@ -1,4 +1,4 @@
-<%- include('partials/header', {title: "Salty Chart Worldwide: Исполнители" }); %>
+<%- include('partials/header', {title: "Salty Chart Worldwide: Artists" }); %>
 
     <body>
         <%- include('partials/header-menu'); %>
@@ -24,7 +24,7 @@
                 <div class="artists-hub-container">
                     <% artists_new.forEach((track)=> { %>
                         <%- include('partials/artist-entry', {artist: track}); %>
-                            <% }); %>
+                    <% }); %>
                 </div>
                 <nav aria-label="pagination" class="pagination-box noselect">
                     <ul class="pagination">
