@@ -2,9 +2,10 @@ import express from 'express';
 import { QueryTypes } from 'sequelize';
 import { sequelize } from '../database.js';
 import { Performer } from "./models.js";
+import { requiresAuthentication, requiresAdmin } from "../auth/controller.js";
 
 export const artistRouter = express.Router();
-artistRouter.get("/:tech_name", async (req, res) => {
+artistRouter.get("/:tech_name", requiresAuthentication, async (req, res) => {
     const artist = await Performer.findOne({
         raw: true,
         where: { tech_name: req.params.tech_name }
@@ -96,7 +97,7 @@ artistRouter.get("/:tech_name", async (req, res) => {
     }
 });
 
-artistRouter.get("/", async (req, res) => {
+artistRouter.get("/", requiresAuthentication, async (req, res) => {
     const sort = req.query['sort'];
     let page = req.query.page;
 

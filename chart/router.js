@@ -6,7 +6,7 @@ import { ChartMainPosition } from "../chart/models.js";
 import { requiresAuthentication, requiresAdmin } from "../auth/controller.js";
 
 export const chartRouter = express.Router();
-chartRouter.get("/chart/:year-:month-:day", async (req, res) => {
+chartRouter.get("/chart/:year-:month-:day", requiresAuthentication, async (req, res) => {
     let todayDate = new Date(
         +req.params.year,
         +req.params.month - 1,
@@ -82,7 +82,7 @@ chartRouter.get("/chart/:year-:month-:day", async (req, res) => {
     }
 });
 
-chartRouter.get("/chart", async (req, res) => {
+chartRouter.get("/chart", requiresAuthentication, async (req, res) => {
     const max_date = await ChartMainPosition.findAll({
         attributes: [
             [sequelize.fn("max", sequelize.col("chart_date")), "max"],

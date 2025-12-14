@@ -3,11 +3,12 @@ import bodyParser from 'body-parser';
 import { QueryTypes } from 'sequelize';
 import { sequelize } from '../database.js';
 import { google } from "googleapis";
+import { requiresAuthentication, requiresAdmin } from "../auth/controller.js";
 
-let jsonParser = bodyParser.json()
+const jsonParser = bodyParser.json();
 export const apiRouter = express.Router();
 
-apiRouter.post("/parse", jsonParser, async (req, res) => {
+apiRouter.post("/parse", requiresAdmin, jsonParser, async (req, res) => {
     let script = "INSERT INTO positions(chart_date, track_position, track_id) VALUES "
     req.body.data.forEach(entry => {
         script += `('${req.body.date}', '${entry[0]}', (select t.id from track t where t.title = '${entry[1].replaceAll("'", "''")}' and t.performer = '${entry[2].replaceAll("'", "''")}')),`
@@ -25,7 +26,7 @@ apiRouter.post("/parse", jsonParser, async (req, res) => {
         });
 });
 
-apiRouter.get("/update", async (req, res) => {
+apiRouter.get("/update", requiresAdmin, async (req, res) => {
     const result = await sequelize.query(`select tr.title, tr.performer,
         count(p.id) as days,
         min(p.track_position) as peak,
@@ -66,7 +67,7 @@ apiRouter.get("/update", async (req, res) => {
     });
 });
 
-apiRouter.get("/update/:year", async (req, res) => {
+apiRouter.get("/update/:year", requiresAdmin, async (req, res) => {
     const result = await sequelize.query(`select tr.title, tr.performer,
         count(p.id) as days,
         min(p.track_position) as peak,
