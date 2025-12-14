@@ -16,6 +16,10 @@ export const User = sequelize.define("users", {
     },
     isAdmin: {
         type: Sequelize.BOOLEAN
+    },
+    avatar: {
+        type: Sequelize.STRING,
+        allowNull: true
     }
 }, {
     freezeTableName: true,

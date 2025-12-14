@@ -11,7 +11,7 @@
 }
 
 .artist-page-top {
-    background-color: #dfdfec;
+    background-color: #d6d6fb;
     padding: 50px 75px 20px 75px;
     display: flex;
     justify-content: space-between;
@@ -240,7 +240,7 @@
 }
 
 .table-header {
-    background-color: #dfdfec;
+    background-color: #d6d6fb;
     padding-bottom: 7px;
     height: 38px;
 }

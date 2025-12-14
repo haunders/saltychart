@@ -58,7 +58,7 @@
 }
 
 body {
-    background-color: #edecec;
+    background-color: #f4f4ff;
     margin: 0;
 }
 
@@ -89,7 +89,7 @@ body {
 }
 
 .date-box-input {
-    background-color: #edecec;
+    background-color: #f4f4ff;
     font-family: "Azeret Mono", monospace;
     padding: 0 16px 0 16px;
     border: 0.8px black solid;
@@ -351,13 +351,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .header-page {
     background-color: #aeaef6;
-    padding: 15px 75px;
+    padding: 15px 0;
 }
 
 .header-buttons {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1390px;
+    margin: auto;
 }
 
 .header-logo-img {
@@ -370,6 +372,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin: 0;
     padding: 0;
     gap: 30px;
+    align-items: center;
 }
 
 .header-menu ul li {
@@ -384,4 +387,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .header-menu-link:hover {
     text-decoration: underline;
+}
+
+.header-menu-entry {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 35px;
+    aspect-ratio: 1 / 1;
+    border: #6a6ad6 2px solid;
+    border-radius: 100%;
 }

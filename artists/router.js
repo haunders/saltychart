@@ -2,6 +2,7 @@ import express from 'express';
 import { QueryTypes } from 'sequelize';
 import { sequelize } from '../database.js';
 import { Performer } from "./models.js";
+import { User } from "../auth/models.js";
 import { requiresAuthentication, requiresAdmin } from "../auth/controller.js";
 
 export const artistRouter = express.Router();
@@ -82,6 +83,7 @@ artistRouter.get("/:tech_name", requiresAuthentication, async (req, res) => {
                     type: QueryTypes.SELECT,
                 });
         }
+        const user_logged = await User.findOne({ where: { googleId: req.user.id } });
         res.render('artist-page', {
             artist: artist,
             no1_amount: no1_amount,
@@ -89,7 +91,8 @@ artistRouter.get("/:tech_name", requiresAuthentication, async (req, res) => {
             full_len: full_len,
             tracks: result,
             band_link: band_link,
-            aka_raw: aka_raw
+            aka_raw: aka_raw,
+            user_logged: user_logged
         });
     }
     else {
@@ -124,13 +127,15 @@ artistRouter.get("/", requiresAuthentication, async (req, res) => {
     else {
         options.order = [['id', 'DESC']];
     }
-    const { docs, pages, total } = await Performer.paginate(options)
+    const { docs, pages, total } = await Performer.paginate(options);
+    const user_logged = await User.findOne({ where: { googleId: req.user.id } });
 
     res.render('artists-hub', {
         artists_new: docs,
         artists_pages_new: pages,
         page: page,
-        sort: sort
+        sort: sort,
+        user_logged: user_logged
     });
 });
 

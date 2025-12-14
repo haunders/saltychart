@@ -17,7 +17,8 @@ authRouter.get("/google/callback", passport.authenticate('google', {
             User.update(
                 {
                     name: req.user.displayName,
-                    googleId: req.user.id
+                    googleId: req.user.id,
+                    avatar: req.user.photos[0].value
                 },
                 { where: { email: req.user.emails[0].value } }
             )

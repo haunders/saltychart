@@ -3,6 +3,7 @@ import { QueryTypes } from 'sequelize';
 import { sequelize } from '../database.js';
 import { vk } from '../vk-api.js';
 import { ChartMainPosition } from "../chart/models.js";
+import { User } from "../auth/models.js";
 import { requiresAuthentication, requiresAdmin } from "../auth/controller.js";
 
 export const chartRouter = express.Router();
@@ -67,14 +68,16 @@ chartRouter.get("/chart/:year-:month-:day", requiresAuthentication, async (req, 
                 [sequelize.fn("max", sequelize.col("chart_date")), "max"],
             ],
             raw: true
-        })
+        });
+        const user_logged = await User.findOne({ where: { googleId: req.user.id } });
 
         res.render('index', {
             data: result,
             date: prevDate,
             date_string: date_string,
             data_out: result_out,
-            max_date: max_date[0].max
+            max_date: max_date[0].max,
+            user_logged: user_logged
         });
     }
     else {
@@ -134,12 +137,14 @@ chartRouter.get("/parse", requiresAdmin, async (req, res) => {
             }
         });
 
-    }
+    };
+    const user_logged = await User.findOne({ where: { googleId: req.user.id } });
 
     res.render('parse', {
         values: values,
         date: max_date_one,
-        post: post
+        post: post,
+        user_logged: user_logged
     });
 });
 

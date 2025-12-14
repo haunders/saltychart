@@ -1,7 +1,7 @@
 <%- include('partials/header', {title: "Salty Chart Worldwide: " +artist.title}); %>
 
     <body>
-        <%- include('partials/header-menu'); %>
+        <%- include('partials/header-menu', {user_logged: user_logged }); %>
             <div class="artist-page-top">
                 <div class="artist-header">
                     <img class="artist-img" src=<%="/img/artists/" + artist.techName + ".jpg" %>

@@ -4,6 +4,7 @@ import { QueryTypes } from 'sequelize';
 import { sequelize } from '../database.js';
 import { google } from "googleapis";
 import { requiresAuthentication, requiresAdmin } from "../auth/controller.js";
+import { User } from "../auth/models.js";
 
 const jsonParser = bodyParser.json();
 export const apiRouter = express.Router();
@@ -110,6 +111,14 @@ apiRouter.get("/update/:year", requiresAdmin, async (req, res) => {
             res.status(200).send("Updated");
         }
     });
+});
+
+apiRouter.get("/getuser", async (req, res) => {
+    if (req.user) {
+        const user = await User.findOne({ where: { googleId: req.user.id } });
+        return res.status(200).send(user);
+    }
+    res.status(400).send("You are not logged in");
 });
 
 export default apiRouter;
