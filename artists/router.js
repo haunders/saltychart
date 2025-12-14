@@ -1,20 +1,26 @@
 import express from 'express';
 import { QueryTypes } from 'sequelize';
-import { knex_db, sequelize } from '../database.js';
+import { sequelize } from '../database.js';
 import { Performer } from "./models.js";
+import { User } from "../auth/models.js";
+import { requiresAuthentication, requiresAdmin } from "../auth/controller.js";
 
 export const artistRouter = express.Router();
-artistRouter.get("/:tech_name", async(req, res) => {
-    const artist = await Performer.findOne({ 
-            raw: true,
-            where: { tech_name: req.params.tech_name }
-        });
+artistRouter.get("/:tech_name", requiresAuthentication, async (req, res) => {
+    const artist = await Performer.findOne({
+        raw: true,
+        where: { tech_name: req.params.tech_name }
+    });
     if (artist != "") {
         const result = await sequelize.query(`select tr.title, tr.performer, tr.display_title, tr.display_performer,
             count(p.id) as days, min(p.track_position) as peak,
             nullif(count(p.id) filter(where p.track_position = 1), 0) as days_at_1,
             min(p.chart_date) as debut,
-            coalesce(sum(21 - p.track_position),0) as points
+            coalesce(sum(21 - p.track_position),0) as points,
+            (select p2.chart_date from positions p2
+            where p2.track_id = tr.id
+            order by p2.track_position, p2.chart_date
+            limit 1) as peak_date
             from track tr
             left join positions p on p.track_id = tr.id
             left join bind_track_artist bta on bta.track_id = tr.id
@@ -58,25 +64,26 @@ artistRouter.get("/:tech_name", async(req, res) => {
             left join performer p1 on p1.id = bm.band_id
             left join performer p2 on p2.id = bm.member_id
             where p1.tech_name = :tech_name;`,
-            {
-                replacements: {
-                    tech_name: req.params.tech_name
-                },
-                type: QueryTypes.SELECT,
-            });
+                {
+                    replacements: {
+                        tech_name: req.params.tech_name
+                    },
+                    type: QueryTypes.SELECT,
+                });
         }
         else {
             band_link = await sequelize.query(`select p1.title as band_title, p1.tech_name as band_tech from band_member bm 
             left join performer p1 on p1.id = bm.band_id
             left join performer p2 on p2.id = bm.member_id
             where p2.tech_name = :tech_name;`,
-            {
-                replacements: {
-                    tech_name: req.params.tech_name
-                },
-                type: QueryTypes.SELECT,
-            });
+                {
+                    replacements: {
+                        tech_name: req.params.tech_name
+                    },
+                    type: QueryTypes.SELECT,
+                });
         }
+        const user_logged = await User.findOne({ where: { googleId: req.user.id } });
         res.render('artist-page', {
             artist: artist,
             no1_amount: no1_amount,
@@ -84,7 +91,8 @@ artistRouter.get("/:tech_name", async(req, res) => {
             full_len: full_len,
             tracks: result,
             band_link: band_link,
-            aka_raw: aka_raw
+            aka_raw: aka_raw,
+            user_logged: user_logged
         });
     }
     else {
@@ -92,25 +100,42 @@ artistRouter.get("/:tech_name", async(req, res) => {
     }
 });
 
-artistRouter.get("/", async(req, res) => {
+artistRouter.get("/", requiresAuthentication, async (req, res) => {
     const sort = req.query['sort'];
-    const page = req.query.page;
-    let knex_db_link = knex_db("performer")
-    if (sort == "alphabet") {
-        knex_db_link = knex_db_link.orderBy("title", "asc")
+    let page = req.query.page;
+
+    if (page == undefined) {
+        page = 1;
     }
     else {
-        knex_db_link = knex_db_link.orderBy("id", "desc")
+        try {
+            page = parseInt(page);
+        }
+        catch (e) {
+            return res.status(403).send("Page is unacceptable")
+        }
     }
-    const results = await knex_db_link.paginate({
-        perPage: 20,
-        currentPage: page,
-        isLengthAware: true
-    }, )
+    
+    let options = {
+        attributes: ['title', 'tech_name'],
+        page: page,
+        paginate: 20
+    }
+    if (sort == "alphabet") {
+        options.order = [['title', 'ASC']];
+    }
+    else {
+        options.order = [['id', 'DESC']];
+    }
+    const { docs, pages, total } = await Performer.paginate(options);
+    const user_logged = await User.findOne({ where: { googleId: req.user.id } });
+
     res.render('artists-hub', {
-        artists: results.data,
-        artists_pages: results.pagination,
-        sort: sort
+        artists_new: docs,
+        artists_pages_new: pages,
+        page: page,
+        sort: sort,
+        user_logged: user_logged
     });
 });
 

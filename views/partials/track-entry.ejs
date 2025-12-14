@@ -16,9 +16,11 @@
         </span>
     </div>
     <div class="artist-track-stats">
+        <% let format_debut = new Date(track.debut).toLocaleString("ru-RU").split(", ")[0] %>
+        <% let format_peak = new Date(track.peak_date).toLocaleString("ru-RU").split(", ")[0] %>
         <div class="artist-track-stats-debut">
             <span class="artist-track-stats-debut-date">
-                <a href=<%= "/chart/"+track.debut %>><%= track.debut %></a>
+                <a href=<%= "/chart/"+track.debut %>><%= format_debut %></a>
             </span>
         </div>
         <div class="artist-track-stats-peak">
@@ -29,6 +31,11 @@
             <% if (track.days_at_1 != null) { %>
                 <span class="artist-track-stats-peak-amount">x<%= track.days_at_1 %></span>
             <% } %>
+        </div>
+        <div class="artist-track-stats-debut">
+            <span class="artist-track-stats-debut-date">
+                <a href=<%= "/chart/"+track.peak_date %>><%= format_peak %></a>
+            </span>
         </div>
         <div class="artist-track-stats-peak">
             <span class="artist-track-stats-peak-num"><%= track.points %></span>

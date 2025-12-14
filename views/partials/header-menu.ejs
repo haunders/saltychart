@@ -7,8 +7,24 @@
             <ul>
                 <li><a class="header-menu-link" href="/chart">Chart</a></li>
                 <li><a class="header-menu-link" href="/artists">Artists</a></li>
-                <li><a class="header-menu-link" href="/parse?post=1">Parse</a></li>
-                <li><a class="header-menu-link" href="/admin">Admin</a></li>
+                <li><a class="header-menu-link" href="/changelog">Changelog</a></li>
+                <% if (user_logged.isAdmin) { %>
+                    <li><a class="header-menu-link" href="/parse?post=1">Parse</a></li>
+                    <li><a class="header-menu-link" href="/admin">Admin</a></li>
+                <% }; %>
+            </ul>
+        </div>
+        <div class="header-menu">
+            <ul>
+                <% if (user_logged) { %>
+                    <li class="header-menu-entry" >
+                        <img class="user-avatar" src=<%- user_logged.avatar %> 
+                        onerror="this.onerror=null; this.src='/img/artists/placeholder.jpg';"/>
+                        <a><%- user_logged.name %></a>
+                    </li>
+                <% } else { %>
+                    <li><a class="header-menu-link" href="/auth/google">Login</a></li>
+                <% }; %>
             </ul>
         </div>
     </div>

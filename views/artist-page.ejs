@@ -1,7 +1,7 @@
 <%- include('partials/header', {title: "Salty Chart Worldwide: " +artist.title}); %>
 
     <body>
-        <%- include('partials/header-menu'); %>
+        <%- include('partials/header-menu', {user_logged: user_logged }); %>
             <div class="artist-page-top">
                 <div class="artist-header">
                     <img class="artist-img" src=<%="/img/artists/" + artist.techName + ".jpg" %>
@@ -62,6 +62,7 @@
                             <div class="table-header-text-block"><span>Debut date</span></div>
                             <div class="table-header-text-block-2"><span>Days on chart</span></div>
                             <div class="table-header-text-block-2"><span>Peak position</span></div>
+                            <div class="table-header-text-block"><span>Peak date</span></div>
                             <div class="table-header-text-block-2"><span>Points</span></div>
                         </div>
                     </div>

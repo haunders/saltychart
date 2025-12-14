@@ -3,15 +3,18 @@ import session from 'express-session';
 import passport from 'passport';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import cookieSession from 'cookie-session';
 import { config } from 'dotenv';
 import { chartRouter } from './chart/router.js';
 import { artistRouter } from './artists/router.js';
 import { authRouter } from './auth/router.js';
 import { apiRouter } from './api/router.js';
+import { changelogRouter } from './changelog/router.js';
 import { admin, adminRouter } from './admin.js';
+import { User } from "./auth/models.js";
 import GoogleStrategy from 'passport-google-oauth20';
 
-config();
+config({ quiet: true });
 const start = async () => {
     const app = express();
 
@@ -24,7 +27,7 @@ const start = async () => {
     app.set("trust proxy", 1);
 
     app.use(
-        session({
+        cookieSession({
             secret: process.env.COOKIE_SECRET,
             resave: false,
             saveUninitialized: true,
@@ -55,11 +58,25 @@ const start = async () => {
 
     app.set('view engine', 'ejs');
     app.use(express.static('static'));
+
+    app.use(admin.options.rootPath, async (req, res, next) => {
+        if (req.user) {
+            const user = await User.findOne({ where: { googleId: req.user.id } });
+            if (user.isAdmin) {
+                return next();
+            }
+            return res.status(400).send("You are not allowed to be here. You are not admin.")
+        }
+        res.status(400).send("You are not allowed to watch here. Log in.")
+    });
+
     app.use(admin.options.rootPath, adminRouter);
     app.use('/', chartRouter);
     app.use('/artists', artistRouter);
     app.use('/auth', authRouter);
     app.use('/api', apiRouter);
+    app.use('/changelog', changelogRouter);
+
     app.listen(process.env.APP_PORT, () => {
         console.log(`AdminJS started on ${process.env.APP_URL}${admin.options.rootPath}`);
     });
