@@ -11,7 +11,7 @@ artistRouter.get("/:tech_name", requiresAuthentication, async (req, res) => {
         raw: true,
         where: { tech_name: req.params.tech_name }
     });
-    if (artist != "") {
+    if ( artist ) {
         const result = await sequelize.query(`select tr.title, tr.performer, tr.display_title, tr.display_performer,
             count(p.id) as days, min(p.track_position) as peak,
             nullif(count(p.id) filter(where p.track_position = 1), 0) as days_at_1,
@@ -59,7 +59,7 @@ artistRouter.get("/:tech_name", requiresAuthentication, async (req, res) => {
                 type: QueryTypes.SELECT,
             });
         let band_link = null;
-        if (artist.is_band) {
+        if (artist.isBand) {
             band_link = await sequelize.query(`select p2.title as band_title, p2.tech_name as band_tech from band_member bm 
             left join performer p1 on p1.id = bm.band_id
             left join performer p2 on p2.id = bm.member_id

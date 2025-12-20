@@ -13,16 +13,14 @@ authRouter.get("/google/callback", passport.authenticate('google', {
 }), async (req, res) => {
     const emailExists = await User.findOne({ where: { email: req.user.emails[0].value } });
     if (emailExists) {
-        if (emailExists.name != req.user.displayName) {
-            User.update(
-                {
-                    name: req.user.displayName,
-                    googleId: req.user.id,
-                    avatar: req.user.photos[0].value
-                },
-                { where: { email: req.user.emails[0].value } }
-            )
-        }
+        User.update(
+            {
+                name: req.user.displayName,
+                googleId: req.user.id,
+                avatar: req.user.photos[0].value
+            },
+            { where: { email: req.user.emails[0].value } }
+        )
         res.redirect("/chart");
     }
     else {

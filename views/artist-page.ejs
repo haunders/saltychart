@@ -7,7 +7,7 @@
                     <img class="artist-img" src=<%="/img/artists/" + artist.techName + ".jpg" %>
                     onerror="this.onerror=null; this.src='/img/artists/placeholder.jpg';"/>
                     <div class="artist-info">
-                        <% if (!artist.is_band) {%>
+                        <% if (!artist.isBand) {%>
                             <h3 class="artist-type">Artist</h3>
                             <% } else {%>
                                 <h3 class="artist-type">Band</h3>
@@ -22,7 +22,7 @@
                                             <% }); %>
                                                 <% } %>
                                                     <% if (band_link.length> 0) {%>
-                                                        <% if (!artist.is_band) {%>
+                                                        <% if (!artist.isBand) {%>
                                                             <h3 class="artist-type members-title">Member of:</h3>
                                                             <% band_link.forEach((band)=> { %>
                                                                 <span class="band-block"><a href=<%- band.band_tech
