@@ -1,0 +1,52 @@
+.header-page {
+    background-color: #aeaef6;
+    padding: 15px 0;
+}
+
+.header-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1390px;
+    margin: auto;
+}
+
+.header-logo-img {
+    height: 35.15px;
+}
+
+.header-menu ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 30px;
+    align-items: center;
+}
+
+.header-menu ul li {
+    font-family: 'Crystal Medium', sans-serif;
+    font-weight: 500;
+}
+
+.header-menu-link {
+    text-decoration: none;
+    color: #000000;
+}
+
+.header-menu-link:hover {
+    text-decoration: underline;
+}
+
+.header-menu-entry {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 35px;
+    aspect-ratio: 1 / 1;
+    border: #6a6ad6 2px solid;
+    border-radius: 100%;
+}

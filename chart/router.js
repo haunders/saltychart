@@ -69,15 +69,13 @@ chartRouter.get("/chart/:year-:month-:day", requiresAuthentication, async (req, 
             ],
             raw: true
         });
-        const user_logged = await User.findOne({ where: { googleId: req.user.id } });
 
-        res.render('index', {
+        res.render('chart-page', {
             data: result,
             date: prevDate,
             date_string: date_string,
             data_out: result_out,
-            max_date: max_date[0].max,
-            user_logged: user_logged
+            max_date: max_date[0].max
         });
     }
     else {
@@ -138,18 +136,18 @@ chartRouter.get("/parse", requiresAdmin, async (req, res) => {
         });
 
     };
-    const user_logged = await User.findOne({ where: { googleId: req.user.id } });
 
     res.render('parse', {
         values: values,
         date: max_date_one,
-        post: post,
-        user_logged: user_logged
+        post: post
     });
 });
 
 chartRouter.get("/", async (req, res) => {
-    res.send("Nothing happened at all");
+    res.render('main', {
+        
+    });
 });
 
 export default chartRouter;

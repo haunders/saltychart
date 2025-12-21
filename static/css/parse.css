@@ -1,0 +1,22 @@
+.msg-box {
+    font-family: "Crystal Medium", serif;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.hidden-box {
+    display: none;
+}
+
+.shown-box {
+    display: block;
+}
+
+.success-box {
+    background-color: #aeaef6;
+}
+
+.fail-box {
+    background-color: #f6aeae;
+}

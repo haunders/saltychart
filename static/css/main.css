@@ -1,0 +1,45 @@
+@media(max-width: 1070px) {
+    .main-page-bg {
+        aspect-ratio: auto !important;
+        max-width: 1070px;
+    }
+}
+
+html {
+    height: 100%;
+    margin: 0;
+}
+
+.main-page-body {
+    background-color: #0F0516;
+    height: 100%;
+    margin: 0;
+}
+
+.main-page-bg {
+    background-image: url("../img/main-page-bg.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100%;
+    aspect-ratio: 450 / 338;
+    margin: auto;
+    display: flex;
+    border-radius: 30px;
+    box-shadow: 15px 15px 30px 0 #0F0516 inset, -15px -15px 30px 0 #0F0516 inset;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    padding: 2%;
+    box-sizing: border-box;
+}
+
+.main-page-logo {
+    max-width: 448px;
+}
+
+.main-page-logo-img {
+    width: 100%;
+}

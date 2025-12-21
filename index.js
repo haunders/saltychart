@@ -59,6 +59,23 @@ const start = async () => {
     app.set('view engine', 'ejs');
     app.use(express.static('static'));
 
+    app.use(async function (req, res, next) {
+        res.locals.currentUser = req.user;
+        if (req.user) {
+            const user = await User.findOne({ where: { googleId: req.user.id } });
+            res.locals.isAdmin = user.isAdmin
+        }
+
+        const lang = req.acceptsLanguages('ru')
+
+        if (lang) { // if found, attach it as property to the request
+            res.locals.lang = lang
+        } else { // else set the default language
+            res.locals.lang = 'en'
+        }
+        next();
+    });
+
     app.use(admin.options.rootPath, async (req, res, next) => {
         if (req.user) {
             const user = await User.findOne({ where: { googleId: req.user.id } });

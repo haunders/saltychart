@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <% if (typeof semantic !== 'undefined') {
+        semantic.forEach((semantic_title) => { %>
+            <link rel="stylesheet" type="text/css" href="/semantic/dist/components/<%- semantic_title %>.css" />
+            <link rel="stylesheet" type="text/css" href="/semantic/dist/components/<%- semantic_title %>.min.css" /><% });%>
+    <% } %>
+    <% styles.forEach((style_title) => { %>
+        <link rel="stylesheet" type="text/css" href="/css/<%- style_title %>.css" /><% }); %>
+    <% if (typeof query !== 'undefined') { %>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <% }; %>
+    <link rel="shortcut icon" href="/scw_icon.png" type="image/x-icon">
+    <title><%= title %></title>
+</head>

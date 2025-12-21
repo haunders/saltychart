@@ -83,7 +83,6 @@ artistRouter.get("/:tech_name", requiresAuthentication, async (req, res) => {
                     type: QueryTypes.SELECT,
                 });
         }
-        const user_logged = await User.findOne({ where: { googleId: req.user.id } });
         res.render('artist-page', {
             artist: artist,
             no1_amount: no1_amount,
@@ -91,8 +90,7 @@ artistRouter.get("/:tech_name", requiresAuthentication, async (req, res) => {
             full_len: full_len,
             tracks: result,
             band_link: band_link,
-            aka_raw: aka_raw,
-            user_logged: user_logged
+            aka_raw: aka_raw
         });
     }
     else {
@@ -128,14 +126,12 @@ artistRouter.get("/", requiresAuthentication, async (req, res) => {
         options.order = [['id', 'DESC']];
     }
     const { docs, pages, total } = await Performer.paginate(options);
-    const user_logged = await User.findOne({ where: { googleId: req.user.id } });
 
     res.render('artists-hub', {
         artists_new: docs,
         artists_pages_new: pages,
         page: page,
-        sort: sort,
-        user_logged: user_logged
+        sort: sort
     });
 });
 

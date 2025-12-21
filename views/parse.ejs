@@ -1,9 +1,20 @@
-<%- include('partials/header', {title: "Importing Data" }); %>
+<%- include('partials/html-head', {
+    title: "Importing Data",
+    styles: [
+        "utils/fonts",
+        "utils/misc",
+        "parse",
+        "chart-page",
+        "artists-hub",
+        "components/header-menu"
+    ],
+    query: true
+}); %>
 
     <body>
-        <%- include('partials/header-menu', {user_logged: user_logged }); %>
-        <div class="chart-box">
-            <div class="chart-header">
+        <%- include('partials/header-menu'); %>
+        <div class="narrow-page-box">
+            <div class="head-padding">
                 <h1 class="page-title">Importing Data</h1>
                 <input class="date-box-input" type="date" id="date" name="date" value=<%=date %>
                 min=<%= date %>
@@ -58,13 +69,13 @@
     </body>
     <script>
         async function baby() {
-            let values = []
+            let values = [];
             let el = document.getElementById("date");
-        <% values.forEach((item) => { %>
-                values.push([<%- item[0] %>, "<%- item[1] %>", "<%- item[2] %>"]);
-        <% }); %>
+            <% values.forEach((item) => { %>
+                    values.push([<%- item[0] %>, "<%- item[1] %>", "<%- item[2] %>"]);
+            <% }); %>
 
-        const request = new Request("/api/parse", {
+            const request = new Request("/api/parse", {
                     method: "POST",
                     body: JSON.stringify({
                         data: values,

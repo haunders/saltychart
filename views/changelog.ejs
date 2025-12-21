@@ -1,13 +1,20 @@
-<%- include('partials/header', {title: "Changelog" }); %>
+<%- include('partials/html-head', {
+    title: "Changelog",
+    styles: [
+        "utils/fonts",
+        "utils/misc",
+        "changelog",
+        "components/header-menu"
+    ]
+}); %>
 
 <body>
-    <%- include('partials/header-menu', {user_logged: user_logged }); %>
-        <div class="chart-box">
-            <div class="chart-header artist-hub-header">
+    <%- include('partials/header-menu'); %>
+        <div class="wide-page-box">
+            <div class="head-padding artist-hub-header">
                 <h1 class="page-title">Changelog</h1>
             </div>
-        </div>
-        <div class="wide-box">
+            <div class="changelog-container">
             <% changelog.forEach((entry)=> { %>
                 <section class="changelog-block">
                     <div class="changelog-date">
@@ -34,6 +41,7 @@
                     </div>
                 </section>
             <% }); %>
+            </div>
         </div>
 </body>
 <script>

@@ -1,45 +1,57 @@
-<%- include('partials/header', {title: "Salty Chart Worldwide: " +artist.title}); %>
+<%- include('partials/html-head', {
+    title: "Salty Chart: " +artist.title,
+    styles: [
+        "utils/fonts",
+        "utils/misc",
+        "artist-page",
+        "components/header-menu"
+    ]
+}); %>
 
-    <body>
-        <%- include('partials/header-menu', {user_logged: user_logged }); %>
-            <div class="artist-page-top">
-                <div class="artist-header">
-                    <img class="artist-img" src=<%="/img/artists/" + artist.techName + ".jpg" %>
-                    onerror="this.onerror=null; this.src='/img/artists/placeholder.jpg';"/>
-                    <div class="artist-info">
-                        <% if (!artist.isBand) {%>
-                            <h3 class="artist-type">Artist</h3>
-                            <% } else {%>
-                                <h3 class="artist-type">Band</h3>
-                                <% } %>
-                                    <h1 class="artist-title">
-                                        <%= artist.title %>
-                                    </h1>
-                                    <% if (aka_raw.length> 0) {%>
-                                        <h3 class="artist-type members-title">a.k.a.:</h3>
-                                        <% aka_raw.forEach((aka)=> { %>
-                                            <span class="band-block"><%- aka.title %></span>
-                                            <% }); %>
-                                                <% } %>
-                                                    <% if (band_link.length> 0) {%>
-                                                        <% if (!artist.isBand) {%>
-                                                            <h3 class="artist-type members-title">Member of:</h3>
-                                                            <% band_link.forEach((band)=> { %>
-                                                                <span class="band-block"><a href=<%- band.band_tech
-                                                                        %>><%- band.band_title %></a></span>
-                                                                <% }); %>
-                                                                    <% } else {%>
-                                                                        <h3 class="artist-type members-title">Members:
-                                                                        </h3>
-                                                                        <% band_link.forEach((band)=> { %>
-                                                                            <span class="band-block"><a href=<%-
-                                                                                    band.band_tech %>><%-
-                                                                                        band.band_title %></a></span>
-                                                                            <% }); %>
-                                                                                <% } %>
-                                                                                    <% } %>
-                    </div>
-                </div>
+<body>
+    <%- include('partials/header-menu'); %>
+    <div class="artist-page-top">
+        <div class="artist-header">
+            <img class="artist-img" src=<%="/img/artists/" + artist.techName + ".jpg" %>
+            onerror="this.onerror=null; this.src='/img/artists/placeholder.jpg';"/>
+            <div class="artist-info">
+                <% if (!artist.isBand) {%>
+                    <h3 class="artist-type">Artist</h3>
+                <% } else {%>
+                    <h3 class="artist-type">Band</h3>
+                <% } %>
+                <h1 class="artist-title">
+                    <%= artist.title %>
+                </h1>
+                <% if (aka_raw.length> 0) {%>
+                    <h3 class="artist-type members-title">a.k.a.:</h3>
+                    <% aka_raw.forEach((aka)=> { %>
+                        <span class="band-block"><%- aka.title %></span>
+                    <% }); %>
+                <% } %>
+                <% if (band_link.length> 0) {%>
+                    <% if (!artist.isBand) {%>
+                        <h3 class="artist-type members-title">Member of:</h3>
+                        <% band_link.forEach((band)=> { %>
+                            <span class="band-block">
+                                <a href=<%- band.band_tech %>>
+                                    <%- band.band_title %>
+                                </a>
+                            </span>
+                        <% }); %>
+                    <% } else {%>
+                        <h3 class="artist-type members-title">Members:</h3>
+                        <% band_link.forEach((band)=> { %>
+                            <span class="band-block">
+                                <a href=<%-band.band_tech %>>
+                                    <%-band.band_title %>
+                                </a>
+                            </span>
+                        <% }); %>
+                    <% } %>
+                <% } %>
+            </div>
+            </div>
                 <div class="artist-stats">
                     <div class="artist-stat-box">
                         <span class="artist-stat-number"><%- no1_amount %></span>
@@ -57,8 +69,16 @@
             </div>
             <div class="table-header">
                 <% if (full_len> 0) { %>
-                    <div class="chart-box">
+                    <div class="narrow-page-box">
                         <div class="table-header-texts">
+                            <% if (locals.isAdmin) { %>
+                                <form id='form'>
+                                    <input id='single-file' type="file" accept=".jpg, .jpeg">
+                                    <button class="submit-btn" type='submit'>
+                                        Add Image
+                                    </button>
+                                </form>
+                            <% } %>
                             <div class="table-header-text-block"><span>Debut date</span></div>
                             <div class="table-header-text-block-2"><span>Days on chart</span></div>
                             <div class="table-header-text-block-2"><span>Peak position</span></div>
@@ -67,18 +87,36 @@
                         </div>
                     </div>
                     <% } %>
-            </div>
-            <div class="chart-box">
-                <div class="chart-track-box">
-                    <% tracks.forEach((track)=> { %>
-                        <% if (track.days> 0) { %>
-                            <%- include('partials/track-entry', {track: track}); %>
-                                <% } %>
-                                    <% }); %>
-                </div>
-            </div>
-    </body>
-    <script>
-    </script>
+    </div>
+    <div class="narrow-page-box">
+        <div class="chart-track-box">
+            <% tracks.forEach((track)=> { %>
+                <% if (track.days> 0) { %>
+                    <%- include('partials/track-entry', {track: track}); %>
+                <% } %>
+            <% }); %>
+        </div>
+    </div>
+</body>
+<script>
+    const form = document.getElementById("form");
 
-    </html>
+    form.addEventListener("submit", submitForm);
+
+    function submitForm(e) {
+        e.preventDefault();
+        const newName = "<%- artist.techName %>";
+        const formData = new FormData();
+        const singleFile = document.getElementById("single-file")
+        formData.append("singleFile", singleFile.files[0], newName)
+
+        fetch("/api/uploadartist", {
+            method: 'POST',
+            body: formData
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log("Error occured", err));
+    }
+</script>
+
+</html>

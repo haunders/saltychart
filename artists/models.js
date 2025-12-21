@@ -14,6 +14,10 @@ export const Performer = sequelize.define("performer", {
     },
     isBand: {
         type: Sequelize.BOOLEAN
+    },
+    artistImage: {
+        type: Sequelize.STRING,
+        allowNull: true
     }
 }, {
     freezeTableName: true,

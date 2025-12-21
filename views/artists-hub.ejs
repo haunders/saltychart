@@ -1,9 +1,18 @@
-<%- include('partials/header', {title: "Salty Chart Worldwide: Artists" }); %>
+<%- include('partials/html-head', {
+    title: "Salty Chart Worldwide: Artists",
+    styles: [
+        "utils/fonts",
+        "utils/misc",
+        "artists-hub",
+        "artist-page",
+        "components/header-menu"
+    ]
+}); %>
 
     <body>
-        <%- include('partials/header-menu', {user_logged: user_logged }); %>
-            <div class="chart-box">
-                <div class="chart-header artist-hub-header">
+        <%- include('partials/header-menu'); %>
+            <div class="narrow-page-box">
+                <div class="head-padding artist-hub-header">
                     <h1 class="page-title">Artists</h1>
                     <div class="menu-drop noselect" id="menuDrop">
                         <div class="menu-drop-head " id="menuHead">

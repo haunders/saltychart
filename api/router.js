@@ -1,10 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import multer from 'multer';
 import { QueryTypes } from 'sequelize';
 import { sequelize } from '../database.js';
 import { google } from "googleapis";
 import { requiresAuthentication, requiresAdmin } from "../auth/controller.js";
 import { User } from "../auth/models.js";
+
+import { fileTypeFromBuffer } from "file-type";
+import fs from "fs";
 
 const jsonParser = bodyParser.json();
 export const apiRouter = express.Router();
@@ -119,6 +123,29 @@ apiRouter.get("/getuser", async (req, res) => {
         return res.status(200).send(user);
     }
     res.status(400).send("You are not logged in");
+});
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg') {
+        cb(null, true);
+    } else {
+        cb(new Error('Invalid file type, only JPEG is allowed!'), false);
+    }
+};
+
+let storage = multer.diskStorage(
+    {
+        destination: 'static/img/artists',
+        filename: function (req, file, cb) {
+            cb(null, file.originalname + ".jpg");
+        }
+    }
+);
+const upload = multer({ storage: storage, fileFilter });
+
+apiRouter.post("/uploadartist", requiresAdmin, upload.single("singleFile"), async (req, res) => {
+    console.log(req.file);
+    res.status(200).json({ message: "Successfully uploaded files" });
 });
 
 export default apiRouter;

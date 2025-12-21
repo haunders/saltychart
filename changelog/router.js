@@ -12,10 +12,8 @@ changelogRouter.get("/", requiresAuthentication, async (req, res) => {
             ['releaseDate', 'DESC'],
         ],
     });
-    const user_logged = await User.findOne({ where: { googleId: req.user.id } });
     res.render('changelog', {
-        changelog: changelog,
-        user_logged: user_logged
+        changelog: changelog
     });
 });
 
