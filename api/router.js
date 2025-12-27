@@ -102,6 +102,10 @@ apiRouter.get("/update/:year", requiresAdmin, async (req, res) => {
     const authClientObject = await auth.getClient();
     const googleSheetsInstance = google.sheets({ version: "v4", auth: authClientObject });
     const spreadsheetId = "1JeC-evxsT3vLCHb1Lq0eIqjlZg40NWFTgeqTIpqlb2U";
+    googleSheetsInstance.spreadsheets.values.clear({
+        auth,
+        spreadsheetId, 
+        range: req.params.year+'!A:F'});
     googleSheetsInstance.spreadsheets.values.update({
         auth,
         spreadsheetId,

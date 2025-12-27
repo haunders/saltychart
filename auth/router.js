@@ -21,11 +21,11 @@ authRouter.get("/google/callback", passport.authenticate('google', {
             },
             { where: { email: req.user.emails[0].value } }
         )
-        res.redirect("/chart");
+        res.render('auth/success');
     }
     else {
         req.logOut();
-        res.status(403).send("You are not allowed here");
+        res.render('auth/fail');
     }
 
 });
