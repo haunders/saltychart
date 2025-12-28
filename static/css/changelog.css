@@ -1,6 +1,6 @@
 .changelog-date {
     margin: 0 0 10px 0;
-    color: #5b5b5b;
+    color: var(--gray-color-600);
     font-size: 1.25em;
     font-family: 'Crystal Medium', sans-serif;
 }
@@ -13,20 +13,20 @@
 
 .changelog-version-number {
     margin: 0 0 2px 0;
-    color: #737373;
+    color: var(--gray-color-500);
     font-size: 1.05em;
     font-family: 'Crystal Medium', sans-serif;
 }
 
 .changelog-version-phaze {
-    color: #ffffff;
+    color: var(--white);
     font-size: 0.9em;
     font-family: 'Crystal Medium', sans-serif;
     margin: 0;
     float: left;
     padding: 4px 8px;
     border-radius: 5px;
-    background-color: #6a6ad6;
+    background-color: var(--main-color-bright-700);
 }
 
 .changelog-entry {
@@ -36,7 +36,7 @@
 }
 
 .changelog-block {
-    border-bottom: 1px solid #6a6ad6;
+    border-bottom: 1px solid var(--main-color-700);
     margin-bottom: 16px;
 }
 

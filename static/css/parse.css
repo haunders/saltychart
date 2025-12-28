@@ -14,9 +14,9 @@
 }
 
 .success-box {
-    background-color: #aeaef6;
+    background-color: var(--primary-color);
 }
 
 .fail-box {
-    background-color: #f6aeae;
+    background-color: var(--red-error);
 }

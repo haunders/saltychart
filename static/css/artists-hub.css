@@ -30,10 +30,12 @@
     flex-direction: column;
     align-items: center;
     gap: 13px;
-    background-color: #FFFFFF;
+    background-color: var(--white);
     border-radius: 20px;
     padding: 15px;
     width: 17.8%;
+    box-shadow: var(--main-color-200) 0px 0px 13px;
+    box-sizing: border-box;
 }
 
 .artist-img-small {
@@ -55,7 +57,7 @@
 }
 
 .artist-link-hub {
-    color: #000000;
+    color: var(--black);
     text-decoration: none;
     width: fit-content;
 }
@@ -85,15 +87,6 @@
     white-space: nowrap;
 }
 
-nav {
-    border-top: 1px solid #eeeeee;
-    margin-top: 0.5em;
-    font: 1.2em sans-serif;
-
-    display: flex;
-    justify-content: center;
-}
-
 .pagination {
     list-style: none;
     margin: 0;
@@ -109,21 +102,24 @@ nav {
     font-family: "Crystal Condensed Semibold", monospace;
     display: block;
     padding: 0.4em 0.7em;
-    border: 1px solid #501a87;
+    border: 1px solid var(--main-color-bright-700);
     border-radius: 0.2em;
     text-decoration: none;
     font-size: 15px;
-    color: #501a87;
+    color: var(--main-color-bright-700);
 }
 
 .pagination a[aria-current="page"] {
-    background-color: #501a87;
-    color: white;
+    background-color: var(--main-color-bright-700);
+    color: var(--white);
     pointer-events: none;
 }
 
 .pagination-box {
-    margin: 30px 0 20px 0;
+    margin: 50px 0 20px 0;
+    font: 1.2em sans-serif;
+    display: flex;
+    justify-content: center;
 }
 
 .artist-hub-header {
@@ -147,20 +143,20 @@ nav {
     margin: 0;
     position: absolute;
     z-index: 1005;
-    border: #000000 1px solid;
-    background-color: #f6f6f6;
+    border: var(--black) 1px solid;
+    background-color: var(--page-bg);
 }
 
 .menu-drop-head {
-    border: #000000 1px solid;
+    border: var(--black) 1px solid;
     width: 190px;
     padding: 3px 10px;
-    background-color: #f6f6f6;
+    background-color: var(--page-bg);
     cursor: pointer;
 }
 
 .menu-drop-btns a {
-    color: #000000;
+    color: var(--black);
     text-decoration: none;
     padding: 1px 10px;
     width: 188.5px;
@@ -169,7 +165,7 @@ nav {
 
 .menu-drop-btns a:hover {
     text-decoration: underline;
-    background-color: #aeaef6;
+    background-color: var(--primary-color);
 }
 
 .over {
@@ -177,7 +173,7 @@ nav {
 }
 
 .activated {
-    background-color: #aeaef6;
+    background-color: var(--primary-color);
     pointer-events: none;
     text-decoration: none;
 }

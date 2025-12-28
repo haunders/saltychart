@@ -1,5 +1,5 @@
 body {
-    background-color: #f4f4ff;
+    background-color: var(--page-bg);
     margin: 0;
 }
 
@@ -8,7 +8,7 @@ body {
     font-weight: 500;
     font-size: 47px;
     letter-spacing: -0.5px;
-    border-bottom: #aeaef6 solid 10px;
+    border-bottom: var(--primary-color) solid 10px;
     line-height: 20px;
     width: fit-content;
     padding-right: 50px;

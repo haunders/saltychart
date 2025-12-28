@@ -17,7 +17,7 @@ html {
 }
 
 .main-page-body {
-    background-color: #0F0516;
+    background-color: var(--main-page-bg);
     height: 100%;
     margin: 0;
 }
@@ -32,7 +32,7 @@ html {
     margin: auto;
     display: flex;
     border-radius: 30px;
-    box-shadow: 15px 15px 30px 0 #0F0516 inset, -15px -15px 30px 0 #0F0516 inset;
+    box-shadow: 15px 15px 30px 0 var(--main-page-bg) inset, -15px -15px 30px 0 var(--main-page-bg) inset;
     flex-wrap: wrap;
     flex-direction: column;
     justify-content: space-between;
@@ -60,7 +60,7 @@ html {
 }
 
 .main-page-bottom-text {
-    color: #ffffff;
+    color: var(--white);
     text-align: center;
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
@@ -75,20 +75,20 @@ html {
 }
 
 #main-page-button-itself {
-    background-color: #9E84D9;
-    color: #0F0516;
+    background-color: var(--main-color-600);
+    color: var(--main-page-bg);
 }
 
 #main-page-button-itself:hover {
-    background-color: #b7a0eb;
+    filter: brightness(110%);
 }
 
 #main-page-button-itself:active {
-    background-color: #8770bc;
+    filter: brightness(90%);
 }
 
 #sc-icon {
-    background-color: #9E84D9;
+    background-color: var(--main-color-600);
     opacity: 60%;
     position: absolute;
     left: 5px;
