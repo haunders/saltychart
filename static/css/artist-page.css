@@ -10,6 +10,20 @@
     }
 }
 
+@media(max-width: 540px) {
+    .artist-track {
+        flex-direction: column;
+    }
+    .artist-header {
+        flex-direction: column;
+    }
+    .artist-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 .artist-page-top {
     background-color: var(--main-color-200);
     padding: 50px 75px 20px 75px;
@@ -145,15 +159,6 @@
     justify-content: center;
 }
 
-.truncate-text-one-line {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    line-clamp: 1;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-}
-
 .artist-track-title {
     margin-bottom: 0.125rem;
     letter-spacing: .011rem;
@@ -189,6 +194,7 @@
     align-items: center;
     border-right-width: 0.125rem;
     border-color: var(--main-color-100);
+    border-right-style: solid;
 }
 
 .artist-track-stats-debut-date {
@@ -213,6 +219,7 @@
 .artist-track-stats-peak {
     border-right-width: 0.125rem;
     border-color: var(--main-color-100);
+    border-right-style: solid;
     width: 4.375rem;
     display: flex;
     flex-direction: column;
@@ -269,10 +276,4 @@
     display: flex;
     align-items: flex-end;
     justify-content: center;
-}
-
-[aria-current="disabled"] {
-    pointer-events: none;
-    text-decoration: none;
-    color: var(--gray-color-600);
 }

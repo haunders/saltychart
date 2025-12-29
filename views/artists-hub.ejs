@@ -6,7 +6,10 @@
         "utils/misc",
         "artists-hub",
         "artist-page",
-        "components/header-menu"
+        "components/header-menu",
+        "components/pagination",
+        "components/artists-hub/menu-drop",
+        "components/artists-hub/artist-entry"
     ]
 }); %>
 
@@ -15,85 +18,19 @@
             <div class="narrow-page-box">
                 <div class="head-padding artist-hub-header">
                     <h1 class="page-title">Artists</h1>
-                    <div class="menu-drop noselect" id="menuDrop">
-                        <div class="menu-drop-head " id="menuHead">
-                            <% if (sort !="alphabet" ) {%>
-                                By date added
-                                <% } else {%>
-                                    In alphabetical order
-                                    <% }%>
-                        </div>
-                        <ul class="menu-drop-btns" id="sortDrop">
-                            <li><a href="/artists" <% if (sort !="alphabet" ) {%>class="activated"<% }%>>By date
-                                        added</a></li>
-                            <li><a href="/artists?sort=alphabet" <% if (sort=="alphabet" ) {%>class="activated"<% }%>>In
-                                        alphabetical order</a></li>
-                        </ul>
-                    </div>
+                    <%- include('partials/artists-hub/menu-drop')%>
                 </div>
                 <div class="artists-hub-container">
                     <% artists_new.forEach((track)=> { %>
-                        <%- include('partials/artist-entry', {artist: track}); %>
+                        <%- include('partials/artists-hub/artist-entry', {artist: track}); %>
                     <% }); %>
                 </div>
-                <nav aria-label="pagination" class="pagination-box noselect">
-                    <ul class="pagination">
-                        <% if (page > 1) { %>
-                            <li>
-                                <a <% if (sort !="alphabet" ) {%>
-                                    href=<%= "?page=" + (page-1) %>>
-                                <% } else {%>
-                                    href=<%= "?sort=alphabet&page=" + (page-1) %>>
-                                <% }%>
-                                <span aria-hidden="true">&lt;</span>
-                                <span class="visuallyhidden">previous set of pages</span>
-                                </a>
-                            </li>
-                        <% } %>
-                        <% let isThreeDots=false; %>
-                        <% for (let i=1; i <=artists_pages_new; i++) { %>
-                            <% if (i == 1 || i == artists_pages_new || (i >= page-2 && i <= page+2)) { %>
-                                <li>
-                                    <a <% if (sort !="alphabet" ) {%>
-                                        href=<%= "?page=" +i %>
-                                    <% } else {%>
-                                        href=<%= "?sort=alphabet&page=" +i %>
-                                    <% }%>
-                                    <% if (i == page) { %>
-                                        aria-current="page"
-                                    <% } %>>
-                                        <span class="visuallyhidden">
-                                            page
-                                        </span>
-                                        <%- i %>
-                                    </a>
-                                </li>
-                                <% isThreeDots=false; %>
-                            <% } else if (!isThreeDots) { %>
-                                <li><a><span aria-hidden="true">...</span></a></li>
-                                <% isThreeDots=true; %>
-                            <% } %>
-                        <% } %>
-                        <% if (page < artists_pages_new) { %>
-                            <li>
-                                <a
-                                    <% if (sort !="alphabet" ) {%>
-                                        href=<%= "?page="+(page+1) %>
-                                    <% } else {%>
-                                        href=<%= "?sort=alphabet&page="+(page+1)%>
-                                    <% }%>
-                                >
-                                    <span class="visuallyhidden">
-                                        next set of pages
-                                    </span>
-                                    <span aria-hidden="true">
-                                        &gt;
-                                    </span>
-                                </a>
-                            </li>
-                        <% } %>
-                    </ul>
-                </nav>
+                <% const baseurl = (sort === "alphabet" ? "?sort=alphabet&page=" : "?page=") %>
+                <%- include('partials/pagination', {
+                    baseurl: baseurl,
+                    page: page,
+                    max_pages: artists_pages_new
+                }); %>
             </div>
     </body>
     <script>

@@ -1,0 +1,40 @@
+.pagination {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.pagination li {
+    margin: 0 1px;
+}
+
+.pagination a {
+    font-family: "Crystal Condensed Semibold", monospace;
+    display: block;
+    padding: 0.4em 0.7em;
+    border: 1px solid var(--main-color-bright-700);
+    border-radius: 0.2em;
+    text-decoration: none;
+    font-size: 15px;
+    color: var(--main-color-bright-700);
+}
+
+.pagination a[aria-current="page"] {
+    background-color: var(--main-color-bright-700);
+    color: var(--white);
+    pointer-events: none;
+}
+
+.pagination-box {
+    margin: 50px 0 20px 0;
+    font: 1.2em sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.artist-hub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}

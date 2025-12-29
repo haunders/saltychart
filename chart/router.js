@@ -94,7 +94,7 @@ chartRouter.get("/chart", requiresAuthentication, async (req, res) => {
 });
 
 chartRouter.get("/parse", requiresAdmin, async (req, res) => {
-    const post = req.query['post'];
+    const post = parseInt(req.query['post']);
     const max_date = await ChartMainPosition.findAll({
         attributes: [
             [sequelize.literal("max(chart_date) + 1"), "max"],
@@ -104,7 +104,7 @@ chartRouter.get("/parse", requiresAdmin, async (req, res) => {
     let max_date_one = max_date[0].max;
     max_date_one = new Date(max_date_one).toISOString().split('T')[0];
 
-    if (post == null) {
+    if (post === null || isNaN(post)) {
         return res.render('parse', {
             values: [],
             date: max_date_one,
@@ -122,20 +122,17 @@ chartRouter.get("/parse", requiresAdmin, async (req, res) => {
     let regex = new RegExp('[()]');
 
     let values = [];
-    if (post) {
-        data.items[post - 1].text.split('\n').forEach((e, i) => {
-            if ((i > 1 && i < 24) && (e.length > 10)) {
-                position = e.split('. ')[0]
-                rest_track = e.split('. ').slice(1).join('. ')
-                rest_track = rest_track.split('] ').slice(1).join('] ')
-                track_title = rest_track.split(' - ')[0].trim()
-                pref_title = rest_track.split(' - ')[1]
-                pref_title = pref_title.split(regex)[0].trim()
-                values.push([position, track_title, pref_title]);
-            }
-        });
-
-    };
+    data.items[post - 1].text.split('\n').forEach((e, i) => {
+        if ((i > 1 && i < 24) && (e.length > 10)) {
+            position = e.split('. ')[0]
+            rest_track = e.split('. ').slice(1).join('. ')
+            rest_track = rest_track.split('] ').slice(1).join('] ')
+            track_title = rest_track.split(' - ')[0].trim()
+            pref_title = rest_track.split(' - ')[1]
+            pref_title = pref_title.split(regex)[0].trim()
+            values.push([position, track_title, pref_title]);
+        }
+    });
 
     res.render('parse', {
         values: values,

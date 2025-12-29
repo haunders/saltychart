@@ -119,7 +119,7 @@ artistRouter.get("/", requiresAuthentication, async (req, res) => {
         page: page,
         paginate: 20
     }
-    if (sort == "alphabet") {
+    if (sort === "alphabet") {
         options.order = [['title', 'ASC']];
     }
     else {

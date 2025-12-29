@@ -43,6 +43,15 @@ body {
     -webkit-box-orient: vertical;
 }
 
+.truncate-text-one-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
 .noselect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -50,4 +59,28 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: auto;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    white-space: nowrap;
+}
+
+[aria-current="disabled"] {
+    pointer-events: none;
+    text-decoration: none;
+    color: var(--gray-color-600);
+}
+
+* {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
 }

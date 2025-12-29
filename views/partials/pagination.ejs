@@ -1,0 +1,44 @@
+<nav aria-label="pagination" class="pagination-box noselect">
+    <ul class="pagination">
+        <% if (page > 1) { %>
+            <li>
+                <a href=<%= baseurl + (page-1) %>>
+                    <span aria-hidden="true">&lt;</span>
+                    <span class="visuallyhidden">previous set of pages</span>
+                </a>
+            </li>
+        <% } %>
+        <% let isThreeDots=false; %>
+        <% for (let i=1; i <=max_pages; i++) { %>
+            <% if (i == 1 || i == max_pages || (i >= page-2 && i <= page+2)) { %>
+                <li>
+                    <a href=<%= baseurl + i %>
+                        <% if (i === page) { %>
+                            aria-current="page"
+                        <% } %>>
+                        <span class="visuallyhidden">
+                            page
+                        </span>
+                        <%- i %>
+                    </a>
+                </li>
+                <% isThreeDots=false; %>
+            <% } else if (!isThreeDots) { %>
+                <li><a><span aria-hidden="true">...</span></a></li>
+                <% isThreeDots=true; %>
+            <% } %>
+        <% } %>
+        <% if (page < max_pages) { %>
+            <li>
+                <a href=<%= baseurl + (page+1) %>>
+                    <span class="visuallyhidden">
+                        next set of pages
+                    </span>
+                    <span aria-hidden="true">
+                        &gt;
+                    </span>
+                </a>
+            </li>
+        <% } %>
+    </ul>
+</nav>

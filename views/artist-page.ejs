@@ -54,18 +54,18 @@
             </div>
             </div>
                 <div class="artist-stats">
-                    <div class="artist-stat-box">
-                        <span class="artist-stat-number"><%- no1_amount %></span>
-                        <span class="artist-stat-desc">#1 Hits</span>
-                    </div>
-                    <div class="artist-stat-box">
-                        <span class="artist-stat-number"><%- top3_amount %></span>
-                        <span class="artist-stat-desc">Top-3 Hits</span>
-                    </div>
-                    <div class="artist-stat-box">
-                        <span class="artist-stat-number"><%- full_len %></span>
-                        <span class="artist-stat-desc">Songs</span>
-                    </div>
+                    <%- include('partials/artist-page/artist-stat-box', {
+                        value: no1_amount,
+                        sign: "#1 Hits"
+                    }); %>
+                    <%- include('partials/artist-page/artist-stat-box', {
+                        value: top3_amount,
+                        sign: "Top-3 Hits"
+                    }); %>
+                    <%- include('partials/artist-page/artist-stat-box', {
+                        value: full_len,
+                        sign: "Songs"
+                    }); %>
                 </div>
             </div>
             <div class="table-header">
@@ -93,7 +93,7 @@
         <div class="chart-track-box">
             <% tracks.forEach((track)=> { %>
                 <% if (track.days> 0) { %>
-                    <%- include('partials/track-entry', {track: track}); %>
+                    <%- include('partials/artist-page/track-entry', {track: track}); %>
                 <% } %>
             <% }); %>
         </div>

@@ -12,15 +12,13 @@
                 <div class="main-page-button">
                     <% if (locals.currentUser) { %>
                         <button
-                        id="main-page-button-itself"
-                        class="fluid ui primary button"
+                        class="fluid ui primary button main-page-button-itself"
                         onclick=enterChart()>
                             Enter
                         </button>
                     <% } else { %>
                         <button
-                        id="main-page-button-itself"
-                        class="fluid ui primary button"
+                        class="fluid ui primary button main-page-button-itself"
                         onclick=login()>
                             Login
                         </button>

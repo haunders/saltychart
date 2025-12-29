@@ -5,9 +5,10 @@
         "utils/fonts",
         "utils/misc",
         "parse",
-        "chart-page",
-        "artists-hub",
-        "components/header-menu"
+        "components/header-menu",
+        "components/pagination",
+        "components/date-selector",
+        "components/chart-page/chart-entry"
     ],
     query: true
 }); %>
@@ -52,19 +53,11 @@
                 </div>
                 <% }); %>
         </div>
-        <nav aria-label="pagination" class="pagination-box noselect">
-            <ul class="pagination">
-                <% let isThreeDots=false; %>
-                    <% for (let i=1; i <=20; i++) { %>
-                        <li>
-                            <a href=<%="?post=" +i %>
-                                <% if (post==i) { %>aria-current="page"<% } %>>
-                                        <span class="visuallyhidden">page </span><%- i %>
-                            </a>
-                        </li>
-                        <% } %>
-            </ul>
-        </nav>
+        <%- include('partials/pagination', {
+            baseurl: "?post=",
+            page: post,
+            max_pages: 20
+        }); %>
         </div>
         </div>
     </body>
