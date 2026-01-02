@@ -30,6 +30,12 @@
             </li>
             <div class="chart-entry-stats">
                 <div class="chart-entry-stats-line">
+                    <span class="chart-entry-stats-title">LD</span>
+                    <li>
+                        <span class="chart-entry-stats-value"><%= item.ld %></span>
+                    </li>
+                </div>
+                <div class="chart-entry-stats-line">
                     <span class="chart-entry-stats-title">PEAK</span>
                     <li>
                         <span class="chart-entry-stats-value"><%= item.peak %><% if (item.days_at_1 != null) {%>x<%= item.days_at_1 %><%}%></span>

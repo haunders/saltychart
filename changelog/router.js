@@ -1,20 +1,12 @@
 import express from 'express';
-import { ChangelogInsert } from "./models.js";
-import { User } from "../auth/models.js";
-import { requiresAuthentication, requiresAdmin } from "../auth/controller.js";
+import AuthController from "../auth/entry-points/controller.js";
+import ChangelogController from "./entry-points/controller.js";
 
 export const changelogRouter = express.Router();
 
-changelogRouter.get("/", requiresAuthentication, async (req, res) => {
-    const changelog = await ChangelogInsert.findAll({
-        raw: true,
-        order: [
-            ['releaseDate', 'DESC'],
-        ],
-    });
-    res.render('changelog', {
-        changelog: changelog
-    });
-});
+changelogRouter.get("/",
+    AuthController.requiresAuthentication,
+    ChangelogController.getChangelog
+);
 
 export default changelogRouter;

@@ -10,6 +10,7 @@ import { artistRouter } from './artists/router.js';
 import { authRouter } from './auth/router.js';
 import { apiRouter } from './api/router.js';
 import { changelogRouter } from './changelog/router.js';
+import parseRouter from './parse/router.js';
 import { admin, adminRouter } from './admin.js';
 import { User } from "./auth/models.js";
 import GoogleStrategy from 'passport-google-oauth20';
@@ -68,9 +69,9 @@ const start = async () => {
 
         const lang = req.acceptsLanguages('ru')
 
-        if (lang) { // if found, attach it as property to the request
+        if (lang) {
             res.locals.lang = lang
-        } else { // else set the default language
+        } else {
             res.locals.lang = 'en'
         }
         next();
@@ -88,11 +89,17 @@ const start = async () => {
     });
 
     app.use(admin.options.rootPath, adminRouter);
-    app.use('/', chartRouter);
+
+    app.get("/", async (req, res) => {
+        res.render('main');
+    });
+
+    app.use('/chart', chartRouter);
     app.use('/artists', artistRouter);
     app.use('/auth', authRouter);
     app.use('/api', apiRouter);
     app.use('/changelog', changelogRouter);
+    app.use('/parse', parseRouter);
 
     app.listen(process.env.APP_PORT, () => {
         console.log(`AdminJS started on ${process.env.APP_URL}${admin.options.rootPath}`);

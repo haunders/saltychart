@@ -1,155 +1,34 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import multer from 'multer';
-import { QueryTypes } from 'sequelize';
-import { sequelize } from '../database.js';
-import { google } from "googleapis";
-import { requiresAuthentication, requiresAdmin } from "../auth/controller.js";
-import { User } from "../auth/models.js";
-
-import { fileTypeFromBuffer } from "file-type";
-import fs from "fs";
+import AuthController from "../auth/entry-points/controller.js";
+import ParseAPIController from "../parse/entry-points/api.js";
+import ChartAPIController from "../chart/entry-points/api.js";
+import ArtistAPIController from "../artists/entry-points/api.js";
+import { upload } from "../artists/multer.js";
 
 const jsonParser = bodyParser.json();
 export const apiRouter = express.Router();
 
-apiRouter.post("/parse", requiresAdmin, jsonParser, async (req, res) => {
-    let script = "INSERT INTO positions(chart_date, track_position, track_id) VALUES "
-    req.body.data.forEach(entry => {
-        script += `('${req.body.date}', '${entry[0]}', (select t.id from track t where t.title = '${entry[1].replaceAll("'", "''")}' and t.performer = '${entry[2].replaceAll("'", "''")}')),`
-    });
-    script = script.slice(0, -1) + ";";
-    sequelize.query(script,
-        {
-            type: QueryTypes.INSERT,
-        })
-        .then((result) => {
-            res.status(200).send('Insertion successful:', result);
-        })
-        .catch((error) => {
-            res.status(400).send('Insertion failed:', error);
-        });
-});
-
-apiRouter.get("/update", requiresAdmin, async (req, res) => {
-    const result = await sequelize.query(`select tr.title, tr.performer,
-        count(p.id) as days,
-        min(p.track_position) as peak,
-        nullif(count(p.id) filter(where p.track_position = 1), 0) as days_at_1,
-        coalesce(sum(21 - p.track_position),0) as points,
-        tr.id in (select p.track_id from positions p order by p.id desc limit 20) as charting
-        from track tr
-        left join positions p on p.track_id = tr.id
-        group by tr.id
-        order by tr.id;`,
-        {
-            type: QueryTypes.SELECT,
-        });
-    let result_arrays = [];
-    result.forEach((row) => {
-        result_arrays.push([row.title, row.performer, parseInt(row.days), row.peak, parseInt(row.days_at_1), parseInt(row.points), row.charting]);
-    })
-
-    const auth = new google.auth.GoogleAuth({
-        keyFile: "smooth-verve-411510-825dce00373c.json",
-        scopes: "https://www.googleapis.com/auth/spreadsheets",
-    });
-    const authClientObject = await auth.getClient();
-    const googleSheetsInstance = google.sheets({ version: "v4", auth: authClientObject });
-    const spreadsheetId = "1JeC-evxsT3vLCHb1Lq0eIqjlZg40NWFTgeqTIpqlb2U";
-    googleSheetsInstance.spreadsheets.values.update({
-        auth,
-        spreadsheetId,
-        range: 'All!A:G',
-        valueInputOption: 'RAW',
-        resource: { values: result_arrays },
-    }, (err, response) => {
-        if (err) {
-            res.status(400).send('The API returned an error: ' + err);
-        } else {
-            res.status(200).send("Updated");
-        }
-    });
-});
-
-apiRouter.get("/update/:year", requiresAdmin, async (req, res) => {
-    const result = await sequelize.query(`select tr.title, tr.performer,
-        count(p.id) as days,
-        min(p.track_position) as peak,
-        nullif(count(p.id) filter(where p.track_position = 1), 0) as days_at_1,
-        coalesce(sum(21 - p.track_position),0) as points,
-        tr.id in (select p.track_id from positions p order by p.id desc limit 20) as charting
-        from track tr
-        left join positions p on p.track_id = tr.id
-        where tr.chart_year = :year
-        group by tr.id
-        order by points desc;`,
-        {
-            replacements: {
-                year: req.params.year
-            },
-            type: QueryTypes.SELECT,
-        });
-    let result_arrays = [];
-    result.forEach((row) => {
-        result_arrays.push([row.title, row.performer, parseInt(row.days), row.peak, parseInt(row.days_at_1), parseInt(row.points), row.charting]);
-    })
-
-    const auth = new google.auth.GoogleAuth({
-        keyFile: "smooth-verve-411510-825dce00373c.json",
-        scopes: "https://www.googleapis.com/auth/spreadsheets",
-    });
-    const authClientObject = await auth.getClient();
-    const googleSheetsInstance = google.sheets({ version: "v4", auth: authClientObject });
-    const spreadsheetId = "1JeC-evxsT3vLCHb1Lq0eIqjlZg40NWFTgeqTIpqlb2U";
-    googleSheetsInstance.spreadsheets.values.clear({
-        auth,
-        spreadsheetId, 
-        range: req.params.year+'!A:F'});
-    googleSheetsInstance.spreadsheets.values.update({
-        auth,
-        spreadsheetId,
-        range: req.params.year + '!A:G',
-        valueInputOption: 'RAW',
-        resource: { values: result_arrays },
-    }, (err, response) => {
-        if (err) {
-            res.status(400).send('The API returned an error: ' + err);
-        } else {
-            res.status(200).send("Updated");
-        }
-    });
-});
-
-apiRouter.get("/getuser", async (req, res) => {
-    if (req.user) {
-        const user = await User.findOne({ where: { googleId: req.user.id } });
-        return res.status(200).send(user);
-    }
-    res.status(400).send("You are not logged in");
-});
-
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg') {
-        cb(null, true);
-    } else {
-        cb(new Error('Invalid file type, only JPEG is allowed!'), false);
-    }
-};
-
-let storage = multer.diskStorage(
-    {
-        destination: 'static/img/artists',
-        filename: function (req, file, cb) {
-            cb(null, file.originalname + ".jpg");
-        }
-    }
+apiRouter.post("/parse",
+    AuthController.requiresAdmin,
+    jsonParser,
+    ParseAPIController.doParse
 );
-const upload = multer({ storage: storage, fileFilter });
 
-apiRouter.post("/uploadartist", requiresAdmin, upload.single("singleFile"), async (req, res) => {
-    console.log(req.file);
-    res.status(200).json({ message: "Successfully uploaded files" });
-});
+apiRouter.get("/update",
+    AuthController.requiresAdmin,
+    ChartAPIController.updateMain
+);
+
+apiRouter.get("/update/:year",
+    AuthController.requiresAdmin,
+    ChartAPIController.updateYear
+);
+
+apiRouter.post("/uploadartist",
+    AuthController.requiresAdmin,
+    upload.single("singleFile"),
+    ArtistAPIController.uploadPhoto
+);
 
 export default apiRouter;

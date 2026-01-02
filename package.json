@@ -38,7 +38,6 @@
     "passport-google-oauth20": "^2.0.0",
     "sequelize": "^6.37.7",
     "sequelize-paginate": "^1.1.6",
-    "vk-io": "^4.10.1",
-    "yarn": "^1.22.22"
+    "vk-io": "^4.10.1"
   }
 }
