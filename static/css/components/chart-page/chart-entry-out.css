@@ -1,0 +1,16 @@
+.chart-entry-out-text {
+    font-weight: 800;
+    font-family: "Crystal Extra Bold", serif;
+    font-size: 1.025rem;
+}
+
+.dropout-img {
+    border-left: 0.3125rem solid;
+    border-color: var(--red);
+    width: 70px;
+    height: 70px;
+}
+
+.chart-out-pos {
+    width: 5px;
+}

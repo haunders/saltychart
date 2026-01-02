@@ -1,0 +1,49 @@
+.menu-drop {
+    font-family: "Azeret Mono", monospace;
+    letter-spacing: -0.3px;
+    word-spacing: -3px;
+    padding-right: 5px;
+    font-size: 13px;
+}
+
+.menu-drop-btns {
+    display: none;
+    list-style: none;
+    padding: 8px 0;
+    margin: 0;
+    position: absolute;
+    z-index: 1005;
+    border: var(--black) 1px solid;
+    background-color: var(--page-bg);
+}
+
+.menu-drop-head {
+    border: var(--black) 1px solid;
+    width: 190px;
+    padding: 3px 10px;
+    background-color: var(--page-bg);
+    cursor: pointer;
+}
+
+.menu-drop-btns a {
+    color: var(--black);
+    text-decoration: none;
+    padding: 1px 10px;
+    width: 188.5px;
+    display: block;
+}
+
+.menu-drop-btns a:hover {
+    text-decoration: underline;
+    background-color: var(--primary-color);
+}
+
+.over {
+    display: block;
+}
+
+.activated {
+    background-color: var(--primary-color);
+    pointer-events: none;
+    text-decoration: none;
+}

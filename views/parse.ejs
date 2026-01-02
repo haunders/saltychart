@@ -1,9 +1,22 @@
-<%- include('partials/header', {title: "Importing Data" }); %>
+<%- include('partials/html-head', {
+    title: "Importing Data",
+    styles: [
+        "themes/main", 
+        "utils/fonts",
+        "utils/misc",
+        "parse",
+        "components/header-menu",
+        "components/pagination",
+        "components/date-selector",
+        "components/chart-page/chart-entry"
+    ],
+    query: true
+}); %>
 
     <body>
-        <%- include('partials/header-menu', {user_logged: user_logged }); %>
-        <div class="chart-box">
-            <div class="chart-header">
+        <%- include('partials/header-menu'); %>
+        <div class="narrow-page-box">
+            <div class="head-padding">
                 <h1 class="page-title">Importing Data</h1>
                 <input class="date-box-input" type="date" id="date" name="date" value=<%=date %>
                 min=<%= date %>
@@ -40,31 +53,23 @@
                 </div>
                 <% }); %>
         </div>
-        <nav aria-label="pagination" class="pagination-box noselect">
-            <ul class="pagination">
-                <% let isThreeDots=false; %>
-                    <% for (let i=1; i <=20; i++) { %>
-                        <li>
-                            <a href=<%="?post=" +i %>
-                                <% if (post==i) { %>aria-current="page"<% } %>>
-                                        <span class="visuallyhidden">page </span><%- i %>
-                            </a>
-                        </li>
-                        <% } %>
-            </ul>
-        </nav>
+        <%- include('partials/pagination', {
+            baseurl: "?post=",
+            page: post,
+            max_pages: 20
+        }); %>
         </div>
         </div>
     </body>
     <script>
         async function baby() {
-            let values = []
+            let values = [];
             let el = document.getElementById("date");
-        <% values.forEach((item) => { %>
-                values.push([<%- item[0] %>, "<%- item[1] %>", "<%- item[2] %>"]);
-        <% }); %>
+            <% values.forEach((item) => { %>
+                    values.push([<%- item[0] %>, "<%- item[1] %>", "<%- item[2] %>"]);
+            <% }); %>
 
-        const request = new Request("/api/parse", {
+            const request = new Request("/api/parse", {
                     method: "POST",
                     body: JSON.stringify({
                         data: values,

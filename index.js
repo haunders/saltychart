@@ -10,6 +10,7 @@ import { artistRouter } from './artists/router.js';
 import { authRouter } from './auth/router.js';
 import { apiRouter } from './api/router.js';
 import { changelogRouter } from './changelog/router.js';
+import parseRouter from './parse/router.js';
 import { admin, adminRouter } from './admin.js';
 import { User } from "./auth/models.js";
 import GoogleStrategy from 'passport-google-oauth20';
@@ -59,6 +60,23 @@ const start = async () => {
     app.set('view engine', 'ejs');
     app.use(express.static('static'));
 
+    app.use(async function (req, res, next) {
+        res.locals.currentUser = req.user;
+        if (req.user) {
+            const user = await User.findOne({ where: { googleId: req.user.id } });
+            res.locals.isAdmin = user.isAdmin
+        }
+
+        const lang = req.acceptsLanguages('ru')
+
+        if (lang) {
+            res.locals.lang = lang
+        } else {
+            res.locals.lang = 'en'
+        }
+        next();
+    });
+
     app.use(admin.options.rootPath, async (req, res, next) => {
         if (req.user) {
             const user = await User.findOne({ where: { googleId: req.user.id } });
@@ -71,11 +89,17 @@ const start = async () => {
     });
 
     app.use(admin.options.rootPath, adminRouter);
-    app.use('/', chartRouter);
+
+    app.get("/", async (req, res) => {
+        res.render('main');
+    });
+
+    app.use('/chart', chartRouter);
     app.use('/artists', artistRouter);
     app.use('/auth', authRouter);
     app.use('/api', apiRouter);
     app.use('/changelog', changelogRouter);
+    app.use('/parse', parseRouter);
 
     app.listen(process.env.APP_PORT, () => {
         console.log(`AdminJS started on ${process.env.APP_URL}${admin.options.rootPath}`);

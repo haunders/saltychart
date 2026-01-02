@@ -1,0 +1,25 @@
+.date-box {
+    font-family: "Azeret Mono", monospace;
+    padding: 10px 16px 9px 16px;
+    border: 0.8px var(--black) solid;
+    line-height: 2.5625rem;
+    word-spacing: -0.1875rem;
+    font-weight: 600;
+}
+
+.date-box-input {
+    background-color: var(--page-bg);
+    font-family: "Azeret Mono", monospace;
+    padding: 0 16px 0 16px;
+    border: 0.8px var(--black) solid;
+    line-height: 2.1625rem;
+    word-spacing: -0.1875rem;
+    font-weight: 700;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+}

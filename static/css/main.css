@@ -1,0 +1,104 @@
+@media(max-width: 1070px) {
+    .main-page-bg {
+        aspect-ratio: auto !important;
+        max-width: 1070px;
+    }
+}
+
+@media(max-width: 470px) {
+    .main-page-bg {
+        justify-content: center!important;
+    }
+}
+
+html {
+    height: 100%;
+    margin: 0;
+}
+
+.main-page-body {
+    background-color: var(--main-page-bg);
+    height: 100%;
+    margin: 0;
+}
+
+.main-page-bg {
+    background-image: url("../img/main-page-bg.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100%;
+    aspect-ratio: 450 / 338;
+    margin: auto;
+    display: flex;
+    border-radius: 30px;
+    box-shadow: 15px 15px 30px 0 var(--main-page-bg) inset, -15px -15px 30px 0 var(--main-page-bg) inset;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    padding: 2%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.main-page-logo {
+    max-width: 448px;
+    z-index: 1;
+}
+
+.main-page-logo-img {
+    width: 100%;
+}
+
+.main-page-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+.main-page-bottom-text {
+    color: var(--white);
+    text-align: center;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 16px;
+    text-shadow: 0px 2px 9px #000;
+}
+
+.main-page-button {
+    max-width: 180px;
+    width: -webkit-fill-available;
+}
+
+.ui.primary.button.main-page-button-itself {
+    background-color: var(--main-color-600);
+    color: var(--main-page-bg);
+}
+
+.main-page-button-itself:hover {
+    filter: brightness(110%);
+}
+
+.main-page-button-itself:active {
+    filter: brightness(90%);
+}
+
+#sc-icon {
+    background-color: var(--main-color-600);
+    opacity: 60%;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    height: 86px;
+    width: 130px;
+    mask: url("../sc_icon_mono.svg");
+    -webkit-mask: url("../sc_icon_mono.svg");
+    background-repeat: no-repeat;
+    background-size: 75px;
+    background-position: center;
+    z-index: 0;
+}

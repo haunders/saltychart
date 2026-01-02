@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+import sequelizePaginate from 'sequelize-paginate';
 import { sequelize } from '../database.js';
 
 export const ChangelogInsert = sequelize.define("changelog", {
@@ -23,3 +24,5 @@ export const ChangelogInsert = sequelize.define("changelog", {
     timestamps: false,
     underscored: true
 });
+
+sequelizePaginate.paginate(ChangelogInsert);

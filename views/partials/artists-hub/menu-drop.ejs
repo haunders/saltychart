@@ -1,0 +1,13 @@
+<div class="menu-drop noselect" id="menuDrop">
+    <div class="menu-drop-head " id="menuHead">
+        <% if (sort !="alphabet" ) {%>
+            By date added
+        <% } else {%>
+            In alphabetical order
+        <% }%>
+    </div>
+    <ul class="menu-drop-btns" id="sortDrop">
+        <li><a href="/artists" <% if (sort !="alphabet" ) {%>class="activated"<% }%>>By date added</a></li>
+        <li><a href="/artists?sort=alphabet" <% if (sort=="alphabet" ) {%>class="activated"<% }%>>In alphabetical order</a></li>
+    </ul>
+</div>

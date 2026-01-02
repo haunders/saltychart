@@ -1,0 +1,95 @@
+<%- include('partials/html-head', { title: "Salty Chart" , styles: [ "themes/main" , "utils/fonts" , "utils/misc" , "main" , ],
+    semantic: [ "button" ] }); %>
+
+    <body class="main-page-body">
+        <div class="main-page-bg" id="sc-container">
+            <div id="sc-icon"></div>
+            <div class="main-page-logo">
+                <img class="main-page-logo-img" src="sc_logo_huge.svg" />
+            </div>
+            <div class="main-page-bottom">
+                <p class="main-page-bottom-text">Website is available only to authorized users.</p>
+                <div class="main-page-button">
+                    <% if (locals.currentUser) { %>
+                        <button
+                        class="fluid ui primary button main-page-button-itself"
+                        onclick=enterChart()>
+                            Enter
+                        </button>
+                    <% } else { %>
+                        <button
+                        class="fluid ui primary button main-page-button-itself"
+                        onclick=login()>
+                            Login
+                        </button>
+                    <% }; %>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        let x = 5,
+            y = 5,
+            dirX = 1,
+            dirY = 1;
+        const speed = 2;
+        let dvd = document.getElementById("sc-icon");
+        let black = document.getElementById("sc-container");
+        const dvdWidth = dvd.clientWidth;
+        const dvdHeight = dvd.clientHeight;
+
+        function animate() {
+            const screenHeight = black.clientHeight-5;
+            const screenWidth = black.clientWidth-5;
+
+            if (y + dvdHeight >= screenHeight || y < 0) {
+                dirY *= -1;
+            }
+            if (x + dvdWidth >= screenWidth || x < 0) {
+                dirX *= -1;
+            }
+            x += dirX * speed;
+            y += dirY * speed;
+            dvd.style.left = x + "px";
+            dvd.style.top = y + "px";
+            window.requestAnimationFrame(animate);
+        }
+
+        window.requestAnimationFrame(animate);
+
+        function enterChart() {
+            window.location.href = '/chart';
+        }
+        function login() {
+            const url = '/auth/google';
+            const name = 'Google Authentication';
+            window.removeEventListener('message', receiveMessage);
+            const strWindowFeatures =
+                'toolbar=no, menubar=no, width=600, height=700, top=100, left=100';
+
+            let windowObjectReference = window;
+            let previousUrl = null;
+
+            if (windowObjectReference === null || windowObjectReference.closed) {
+                windowObjectReference = window.open(url, name, strWindowFeatures);
+            } else if (previousUrl !== url) {
+                windowObjectReference = window.open(url, name, strWindowFeatures);
+                windowObjectReference.focus();
+            } else {
+                windowObjectReference.focus();
+            }
+
+            window.addEventListener('message', event => receiveMessage(event), false);
+            
+            previousUrl = url;
+        }
+
+        function receiveMessage(event) {
+            if (event.origin !== "http://localhost:1234") {
+                return;
+            }
+            enterChart();
+        }
+
+    </script>

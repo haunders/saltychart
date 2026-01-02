@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@font-face {
+    font-family: 'Crystal Book';
+    src: url('https://www.billboard.com/wp-content/themes/vip/pmc-billboard-2021/assets/public/Crystal-Book.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Crystal Condensed Semibold';
+    src: url('https://www.billboard.com/wp-content/themes/vip/pmc-billboard-2021/assets/public/Crystal-CondensedSemiBold.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Crystal Expanded Extra Black';
+    src: url('https://www.billboard.com/wp-content/themes/vip/pmc-billboard-2021/assets/public/Crystal-ExpandedExtraBlack.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Crystal Extra Bold';
+    src: url('https://www.billboard.com/wp-content/themes/vip/pmc-billboard-2021/assets/public/Crystal-ExtraBold.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Crystal Medium';
+    src: url('https://www.billboard.com/wp-content/themes/vip/pmc-billboard-2021/assets/public/Crystal-Medium.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Crystal Ultra Condensed Bold';
+    src: url('https://www.billboard.com/wp-content/themes/vip/pmc-billboard-2021/assets/public/Crystal-UltraCondensedBold.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Crystal Ultra Condensed Black';
+    src: url('https://www.billboard.com/wp-content/themes/vip/pmc-billboard-2021/assets/public/Crystal-UltraCondExtBlk.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+}

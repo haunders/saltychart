@@ -1,0 +1,49 @@
+.artist-hub-entry {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+    background-color: var(--white);
+    border-radius: 20px;
+    padding: 15px;
+    width: 17.8%;
+    box-shadow: var(--main-color-200) 0px 0px 13px;
+    box-sizing: border-box;
+}
+
+.artist-img-small {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 20px;
+    transition: .2s;
+}
+
+.artist-img-small:hover {
+    filter: contrast(60%) brightness(123%);
+}
+
+.artist-image-link {
+    width: fit-content;
+    aspect-ratio: 1 / 1;
+    border-radius: 20px;
+}
+
+.artist-link-hub {
+    color: var(--black);
+    text-decoration: none;
+    width: fit-content;
+}
+
+.artist-link-hub:hover {
+    text-decoration: underline;
+}
+
+.artist-hub-name {
+    font-family: "Crystal Medium", "Ubuntu", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    max-width: 140px;
+    display: flex;
+    text-align: center;
+}
