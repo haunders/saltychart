@@ -24,19 +24,28 @@ export const ArtistController = new class {
             });
         }
         else {
-            res.status(404).send("I don't know her");
+            res.status(404).render('404');
         }
     }
 
     getArtistHub = async function (req, res) {
-        const { docs, pages, page, order} = await getArtistPagination(req.query.page, req.query.sort);
-
-        res.render('artists-hub', {
-            artists_new: docs,
-            artists_pages_new: pages,
-            page: page,
-            sort: order
-        });
+        try {
+            const { docs, pages, page, order} = await getArtistPagination(req.query.page, req.query.sort);
+            if (page <= pages) {
+                res.render('artists-hub', {
+                    artists_new: docs,
+                    artists_pages_new: pages,
+                    page: page,
+                    sort: order
+                });
+            }
+            else {
+                res.status(404).render('404');
+            }
+        }
+        catch (e) {
+            res.status(404).render('404');
+        }
     }
 };
 

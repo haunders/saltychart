@@ -1,0 +1,40 @@
+.body-404 {
+    background-color: var(--main-color-400);
+}
+.narrow-404 {
+    position: relative;
+}
+.title-404 {
+    color: var(--black);
+    font-family: "Crystal Extra Bold", sans-serif;
+    font-style: normal;
+    margin: 100px 0 0 0;
+    padding: 15px;
+    z-index: 1;
+}
+.desc-404 {
+    color: var(--black);
+    font-family: "Crystal Media", sans-serif;
+    font-style: normal;
+    padding: 15px;
+    margin: 0;
+    z-index: 1;
+}
+.desc-404 a {
+    color: var(--main-color-bright-900);
+    text-decoration: none;
+}
+.desc-404 a:hover {
+    text-decoration: underline;
+}
+.sc-icon {
+    background-color: var(--main-color-600);
+    opacity: 90%;
+    position: absolute;
+    top: 50px;
+    height: 100px;
+    aspect-ratio: 65/43;
+    mask: url("../sc_icon_mono.svg");
+    -webkit-mask: url("../sc_icon_mono.svg");
+    mask-size: cover;
+}

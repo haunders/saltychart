@@ -19,5 +19,5 @@ export const getChangelogEntries = async function (page) {
         order: [['releaseDate', 'DESC']]
     }
     const { docs, pages, total } = await ChangelogInsert.paginate(options);
-    return docs;
+    return { docs, pages, page };
 }

@@ -12,13 +12,15 @@ export const ChartController = new class {
             +req.params.month - 1,
             +req.params.day
         )
-        if (todayDate.getFullYear() <= 9999) {
+        const max_date = await getChartMaxDate();
+        const max_date_compare = new Date(max_date);
+        const min_date_compare = new Date("2021-01-18");
+        if (prevDate <= max_date_compare && todayDate >= min_date_compare) {
             const date_string = todayDate.toISOString().split('T')[0]
             const date_string_yesterday = prevDate.toISOString().split('T')[0]
 
             const result = await getChartByDate(date_string, date_string_yesterday);
             const result_out = await getChartOutsByDate(date_string, date_string_yesterday);
-            const max_date = await getChartMaxDate();
 
             res.render('chart-page', {
                 data: result,
@@ -29,7 +31,7 @@ export const ChartController = new class {
             });
         }
         else {
-            res.status(404).send("Недопустимый год");
+            res.status(404).render('404');
         }
     };
 

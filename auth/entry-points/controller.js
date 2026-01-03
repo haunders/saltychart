@@ -5,7 +5,7 @@ export const AuthController = new class {
         if (req.user) {
             return next();
         }
-        res.status(400).send("You are not allowed to watch here. Log in.")
+        res.status(403).render('auth/error-unauth')
     };
 
     requiresAdmin = async function (req, res, next) {
@@ -14,9 +14,9 @@ export const AuthController = new class {
             if (user.isAdmin) {
                 return next();
             }
-            return res.status(400).send("You are not allowed to be here. You are not admin.")
+            res.status(403).render('auth/error-notadmin')
         }
-        res.status(400).send("You are not allowed to watch here. Log in.")
+        res.status(403).render('auth/error-unauth')
     };
 
     authCallback = async function (req, res) {

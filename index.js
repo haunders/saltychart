@@ -83,9 +83,9 @@ const start = async () => {
             if (user.isAdmin) {
                 return next();
             }
-            return res.status(400).send("You are not allowed to be here. You are not admin.")
+            return res.status(403).render('auth/error-notadmin')
         }
-        res.status(400).send("You are not allowed to watch here. Log in.")
+        return res.status(403).render('auth/error-unauth')
     });
 
     app.use(admin.options.rootPath, adminRouter);
@@ -100,6 +100,10 @@ const start = async () => {
     app.use('/api', apiRouter);
     app.use('/changelog', changelogRouter);
     app.use('/parse', parseRouter);
+
+    app.use("/", async (req, res) => {
+        res.status(404).render('404');
+    })
 
     app.listen(process.env.APP_PORT, () => {
         console.log(`AdminJS started on ${process.env.APP_URL}${admin.options.rootPath}`);
